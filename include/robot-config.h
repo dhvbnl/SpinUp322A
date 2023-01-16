@@ -25,6 +25,9 @@ extern motor indexer;
 //sensors
 extern inertial inert;
 
+//vision
+extern vision v;
+
 extern triport bExpander;
 
 //extern encoder verticalTracker;
