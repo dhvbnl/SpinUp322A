@@ -1,0 +1,3 @@
+void flywheelControl();
+
+void setflywheelSpeed();

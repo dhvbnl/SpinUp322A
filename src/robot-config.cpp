@@ -17,10 +17,10 @@ motor rightBackDrive = motor(PORT20, ratio6_1, false);
 
 motor flywheel = motor(PORT4, ratio6_1, false);
 
-motor indexer = motor(PORT18, ratio18_1, false);
+motor indexer = motor(PORT18, ratio18_1, true);
 
 motor leftIntake = motor(PORT2, ratio6_1, true);
-motor rightIntake = motor(PORT10, ratio6_1, true);
+motor rightIntake = motor(PORT10, ratio6_1, false);
 
 inertial inert = inertial(PORT9);
 
@@ -28,6 +28,9 @@ signature BLUEGOAL = signature (1, -3355, -1985, -2670, 8655, 12115, 10385, 5.10
 signature REDGOAL = signature (3, -2759, -2009, -2384, 11045, 12621, 11834, 6.5, 0); //fix
 
 vision v = vision (PORT9, 25, REDGOAL, BLUEGOAL); 
+
+digital_out indexerClamp = digital_out(Brain.ThreeWirePort.A);
+digital_out flywheelAdjuster = digital_out(Brain.ThreeWirePort.B);    
 
 triport bottomExpander = triport(PORT13);
 triport topExander = triport(PORT7);

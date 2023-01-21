@@ -21,6 +21,9 @@
 #include "controller.h"
 #include "drivetrain.h"
 #include "opcontrol.h"
+#include "intake.h"
+#include "flywheel.h"
+#include "indexer.h"
 
 //convert between velocity and voltage.
 const double voltageConverstion = 100/12;
