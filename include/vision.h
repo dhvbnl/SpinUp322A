@@ -1,0 +1,1 @@
+int findGoal(vex::color col, vex::vision::signature sig, bool right);

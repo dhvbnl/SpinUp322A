@@ -43,7 +43,8 @@ competition Competition;
 
 int autonToRun = 0;
 bool redSide = true;
-color autonColor = red;
+color autonColor = blue;
+signature autonsig = BLUEGOAL;
 bool selected = false;
 int spacing = 10;
 int xSize = 107;
@@ -69,7 +70,7 @@ Button autonButtons[] = {
 void autonomous(void) {
   if (redSide) {
     switch (autonToRun) {
-    case 0:
+    case 0: testflywheel(blue, BLUEGOAL);
       break;
     case 1:
       break;
@@ -89,7 +90,7 @@ void autonomous(void) {
   } else {
     switch (autonToRun) {
     case 0:
-      break;
+      testvision(blue, BLUEGOAL);
     case 1:
       break;
     case 2:
@@ -112,7 +113,7 @@ int main() {
   Competition.autonomous(autonomous);
   Competition.drivercontrol(opcontrol);
   //preauton();
-
+  
   while (true) {
     if (!Competition.isEnabled()) {
       Brain.Screen.clearScreen();

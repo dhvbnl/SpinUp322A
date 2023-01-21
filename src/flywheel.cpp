@@ -37,3 +37,7 @@ void setflywheelSpeed() {
     }
   }
 }
+
+void flywheelmanual(double speed) {
+  flywheel.spin(fwd, speed, volt);
+}

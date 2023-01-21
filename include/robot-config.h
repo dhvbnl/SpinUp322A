@@ -27,6 +27,9 @@ extern inertial inert;
 
 //vision
 extern vision v;
+extern signature BLUEGOAL;
+extern signature REDGOAL;
+
 
 extern triport bExpander;
 

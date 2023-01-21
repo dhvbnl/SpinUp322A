@@ -23,8 +23,7 @@ motor leftIntake = motor(PORT2, ratio6_1, true);
 motor rightIntake = motor(PORT10, ratio6_1, false);
 
 inertial inert = inertial(PORT9);
-
-signature BLUEGOAL = signature (1, -3355, -1985, -2670, 8655, 12115, 10385, 5.100, 0);
+signature BLUEGOAL = signature (1, -3019, 1, -1509, 6309, 10617, 8463, 3.000, 0);
 signature REDGOAL = signature (3, -2759, -2009, -2384, 11045, 12621, 11834, 6.5, 0); //fix
 
 vision v = vision (PORT9, 25, REDGOAL, BLUEGOAL); 

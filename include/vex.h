@@ -24,6 +24,8 @@
 #include "intake.h"
 #include "flywheel.h"
 #include "indexer.h"
+#include "vision.h"
+#include "mapping.h"
 
 //convert between velocity and voltage.
 const double voltageConverstion = 100/12;
