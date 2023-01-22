@@ -54,4 +54,8 @@ if (!indexerOverride) {
   }
 }
 
+void indexmanual (double speed, bool clamp) {
+  indexerClamp.set(clamp);
+  indexer.spin(fwd, speed, volt);
+}
 //void setindexerClamp() { indexerClamp.set(!indexerClamp.value()); }

@@ -216,3 +216,96 @@ void arcturnTime (double left, double right, int length) {
   leftMiddleDrive.stop();
   rightMiddleDrive.stop();
 }*/
+
+void drivetrainTurn(double targetdeg) {
+
+  double kP = 0.0;
+  double kI = 0.00;
+  double kD = 0;
+
+  // PID loop variables
+  double error = 0.0;
+  double integral = 0.0;
+  double derivative = 0.0;
+  double prevError = 0.0;
+  double motorPower = 0.0;
+  bool useright = true;
+  double avgvel = 0;
+  double speed;
+  const double minMotorPower = 2.5;
+  double changevel = 2.5;
+  int x = 0;
+  while (fabs(targetdeg - getInertialHeading()) > 1) {
+    // PID loop to determine motorPower at any given point in time
+    x++;
+    avgvel = (fabs(leftFrontDrive.velocity(pct)) + fabs(rightFrontDrive.velocity(pct))) / 2;
+    
+    double head = getInertialHeading();
+    // printf("head %f \n", head);
+
+    double errorright = targetdeg - head;
+    if (targetdeg < head) {
+      errorright = 360 - head + targetdeg;
+    }
+
+    double errorleft = fabs(targetdeg - head);
+    if (targetdeg > head) {
+      errorleft = 360 + head - targetdeg;
+    }
+
+    if (errorright < errorleft) {
+      error = errorright;
+      useright = true;
+    } else {
+      error = errorleft;
+      useright = false;
+    }
+
+    // pid stuff
+    
+    integral = integral + error;
+    if ((error == 0.0) or (error > targetdeg)) {
+      integral = 0.0;
+    }
+    derivative = error - prevError;
+    
+    speed = (error * kP + integral * kI + derivative * kD);
+    motorPower = speed;
+    if (avgvel < speed) {
+      motorPower += (speed - avgvel) * changevel;
+    } else if (avgvel > speed) {
+      motorPower -= (avgvel - speed) * changevel;
+    } 
+
+    motorPower = motorPower * 12/100;
+    prevError = error;
+
+    if (motorPower < minMotorPower) {
+      motorPower = minMotorPower;
+    }
+
+  
+    // powering the motors
+    if (!useright) {
+      leftFrontDrive.spin(fwd, -motorPower, volt);
+      leftBackDrive.spin(fwd, -motorPower, volt);
+      rightFrontDrive.spin(fwd, motorPower, volt);
+      rightBackDrive.spin(fwd, motorPower, volt);
+    } else {
+      leftFrontDrive.spin(fwd, motorPower, volt);
+      leftBackDrive.spin(fwd, motorPower, volt);
+      rightFrontDrive.spin(fwd, -motorPower, volt);
+      rightBackDrive.spin(fwd, -motorPower, volt);
+    }
+    wait(10, msec);
+
+  } // end while()
+  leftFrontDrive.stop();
+  rightFrontDrive.stop();
+  rightBackDrive.stop();
+  leftBackDrive.stop();
+  
+}
+
+
+

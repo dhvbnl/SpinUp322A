@@ -9,7 +9,7 @@
 //const int yellowBrightness = 12;
 
 //comp
-const int redBrightness = 50;
+const int redBrightness = 73;
 const int blueBrightness = 150;
 //const int yellowBrightness = 25;
 // void findFrontGoal(color col, signature sig, int basespeed, bool right,
@@ -91,41 +91,49 @@ int findGoal(color col, signature sig, bool right) {
 
   v.takeSnapshot(sig);
   if (right) {
-    setDrivetrainSpeed(4.5,-4.5);
+    setDrivetrainSpeed(3.5,-3.5);
     printf("right %f \n", 0.0);
   } else {
-    setDrivetrainSpeed(-4.5, 4.5);
+    setDrivetrainSpeed(-3.5, 3.5);
     printf("left %f \n", 0.0);
   }
   // if no objects are detected, turn and check again...
   while (v.objectCount == 0 ||
-          v.largestObject.height < 30 ||
-          v.largestObject.width < 60) {
+          v.largestObject.height < 10 ||
+          v.largestObject.width < 20) {
     wait(20, msec);
     v.takeSnapshot(sig);
   }
   printf("object found %f \n", 0.0);
   vision::object test = v.largestObject;
-  int lowerCenterXBound = 130;
-  int upperCenterXBound = 150;
+  int lowerCenterXBound = 0;
+    int upperCenterXBound = 0;
+  if (col == blue){
+    lowerCenterXBound = 160;
+    upperCenterXBound = 170;
+  } 
+  if (col == red) {
+    lowerCenterXBound = 150;
+    upperCenterXBound = 160;
+  }
   double leftspeed; 
   double rightspeed; 
   while (test.centerX < lowerCenterXBound || test.centerX > upperCenterXBound) {
     if (test.centerX < lowerCenterXBound) {
-      leftspeed = -3.5;
-      rightspeed = 3.5;
-      printf("turn left %f \n", double(test.centerX));
+      leftspeed = -2.5;
+      rightspeed = 2.5;
+      printf("turn right %f \n", double(test.centerX));
     } 
      else if (test.centerX > upperCenterXBound) {
-      leftspeed = 3.5; 
-      rightspeed = -3.5;
-      printf("turn right %f \n", double(test.centerX));
+      leftspeed = 2.5; 
+      rightspeed = -2.5;
+      printf("turn left %f \n", double(test.centerX));
     } else {
       leftspeed = 0;
       rightspeed = 0;
     }
     setDrivetrainSpeed(leftspeed, rightspeed);
-    wait(20, msec);
+    wait(100, msec);
     v.takeSnapshot(sig);
   }
   
@@ -133,5 +141,7 @@ int findGoal(color col, signature sig, bool right) {
   area = test.width * test.height;
   printf("finished %f \n", double(test.centerX));
   printf("areavision %f \n", area);
-  return area;
+  printf("width %f \n", double(test.width));
+  printf("height %f \n", double(test.height));
+  return test.width;
 }
