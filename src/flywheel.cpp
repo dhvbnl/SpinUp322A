@@ -8,8 +8,9 @@ int flywheelSpeed = 0;
 
 void flywheelControl() {
   while (true) {
-    //set speed based on inputs
+    // set speed based on inputs
     setflywheelSpeed();
+    flywheelAdjust();
     wait(10, msec);
   }
 }
@@ -24,9 +25,14 @@ void setflywheelSpeed() {
   } else {
     if (getR1Pos() && flywheelDelay > 20) {
       if (flywheelState == 0) {
-        flywheelSpeed = 12;
+        if(flywheelAdjuster.value() == 1){
+          flywheelSpeed = 8;
+        } else{
+          flywheelSpeed = 12;
+        }
+        
         flywheelState = 1;
-      } else if(flywheelState == 1){
+      } else if (flywheelState == 1) {
         flywheelSpeed = 0;
         flywheelState = 0;
       }
@@ -38,6 +44,15 @@ void setflywheelSpeed() {
   }
 }
 
-void flywheelmanual(double speed) {
-  flywheel.spin(fwd, speed, volt);
+void flywheelmanual(double speed) { flywheel.spin(fwd, speed, volt); }
+
+void flywheelAdjust() {
+  if (getL1Pos() && flywheelDelay > 20) {
+    flywheelAdjuster.set(true);
+    flywheelDelay = 0;
+  } else if (getL2Pos() && flywheelDelay > 20) {
+    flywheelAdjuster.set(false);
+    flywheelDelay = 0;
+  }
+  { flywheelDelay++; }
 }

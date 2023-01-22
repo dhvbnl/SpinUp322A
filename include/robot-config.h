@@ -30,6 +30,9 @@ extern vision v;
 extern signature BLUEGOAL;
 extern signature REDGOAL;
 
+extern digital_out indexerClamp;
+extern digital_out flywheelAdjuster;
+
 
 extern triport bExpander;
 
