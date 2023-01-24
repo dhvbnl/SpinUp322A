@@ -108,7 +108,7 @@ int findGoal(color col, signature sig, bool right) {
   vision::object test = v.largestObject;
   int lowerCenterXBound = 0;
     int upperCenterXBound = 0;
-    lowerCenterXBound = 160;
+    lowerCenterXBound = 165;
     upperCenterXBound = 170;
 
   double leftspeed; 

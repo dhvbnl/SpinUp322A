@@ -1,7 +1,7 @@
 #include "vex.h"
 
 void testvision (color col, signature sig) {
-   findGoal(red, REDGOAL, false);
+   findGoal(red, REDGOAL, true);
   //setDrivetrainSpeed(-3.5, 3.5);
 }
 void testinertial () {
@@ -36,7 +36,7 @@ void testflywheel (color col, signature sig) {
   // }
   //printf("volt %f \n", flywheelvolt);
 
-    flywheelmanual(9.3);
+    flywheelmanual(9.2);
     wait(5, sec);
     indexmanual(8, true);
 
