@@ -70,7 +70,7 @@ Button autonButtons[] = {
 void autonomous(void) {
   if (redSide) {
     switch (autonToRun) {
-    case 0: testflywheel(red, REDGOAL);
+    case 0: testinertial();
       break;
     case 1:
       break;
@@ -90,7 +90,7 @@ void autonomous(void) {
   } else {
     switch (autonToRun) {
     case 0:
-      testvision(blue, BLUEGOAL);
+      testvision(red, REDGOAL);
     case 1:
       break;
     case 2:
@@ -181,4 +181,3 @@ bool taskStop(){
     return true;
   return false;
 }
-

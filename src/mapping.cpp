@@ -5,43 +5,48 @@ void testvision (color col, signature sig) {
   //setDrivetrainSpeed(-3.5, 3.5);
 }
 void testinertial () {
-  // printf("inertial before %f \n", getInertialHeading());
-  // drivetrainTurn(90);
-  // printf("inertial after %f \n", getInertialHeading());
-    while(inert.isCalibrating()) {
+  while(inert.isCalibrating()) {
     wait(100, msec);
   }
-  while (true) {
-    printf("inertial after %f \n", getInertialHeading());
-    wait(200, msec);
-  }
+  printf("inertial before %f \n", getInertialHeading());
+  drivetrainTurn(200);
+  wait(200, msec);
+  printf("inertial after %f \n", getInertialHeading());
+  setDrivetrainSpeed(3, 3);
+  wait(500, msec);
+  setDrivetrainSpeed(0, 0);
+
 
 }
 void testflywheel (color col, signature sig) {
-
-  int width = findGoal(blue, BLUEGOAL, false);
+  printf("enterprogram %f \n", 1.0);
+  int width = findGoal(col, sig, false);
   double flywheelvolt = -0.0004*pow(width, 3) + 0.0672 * pow (width, 2) - 3.82 * width + 83.467;
   if (flywheelvolt > 11.5) {
     flywheelvolt = 11.5;
   } 
-  if (width > 70) {
-    flywheelvolt = 9;
-  } else if (width > 55) {
-    flywheelvolt = 9.3;
-  } else if (width > 45) {
-    flywheelvolt = 9.6;
-  } else {
-    flywheelvolt = 11.5;
-  }
-  printf("volt %f \n", flywheelvolt);
-    flywheelmanual(flywheelvolt);
-    wait(3, sec);
-    indexmanual(8, true);
-    wait(100, msec);
-    indexmanual(0, false);
-    wait(2000, msec);
+  // if (width > 70) {
+  //   flywheelvolt = 8.7;
+  // } else if (width > 55) {
+  //   flywheelvolt = 9;
+  // } else if (width > 45) {
+  //   flywheelvolt = 9.2;
+  // } else {
+  //   flywheelvolt = 11.5;
+  // }
+  //printf("volt %f \n", flywheelvolt);
+
+    flywheelmanual(9.3);
+    wait(5, sec);
     indexmanual(8, true);
 
+    for (int i = 0; i < 2; i++) {
+      wait(100, msec);
+      indexmanual(0, false);
+      wait(3000, msec);
+      indexmanual(8, true);
+    }
+    
     
   //flywheelmanual(12);
 }

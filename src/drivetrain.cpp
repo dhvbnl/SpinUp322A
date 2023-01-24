@@ -219,9 +219,9 @@ void arcturnTime (double left, double right, int length) {
 
 void drivetrainTurn(double targetdeg) {
 
-  double kP = 0.0;
-  double kI = 0.00;
-  double kD = 0;
+  double kP = .9;
+  double kI = 0.000;
+  double kD = 0.25;
 
   // PID loop variables
   double error = 0.0;
@@ -283,7 +283,7 @@ void drivetrainTurn(double targetdeg) {
     if (motorPower < minMotorPower) {
       motorPower = minMotorPower;
     }
-
+    setDrivetrainHold();
   
     // powering the motors
     if (!useright) {

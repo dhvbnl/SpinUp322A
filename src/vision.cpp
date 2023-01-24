@@ -9,7 +9,7 @@
 //const int yellowBrightness = 12;
 
 //comp
-const int redBrightness = 73;
+const int redBrightness = 59;
 const int blueBrightness = 150;
 //const int yellowBrightness = 25;
 // void findFrontGoal(color col, signature sig, int basespeed, bool right,
@@ -108,14 +108,9 @@ int findGoal(color col, signature sig, bool right) {
   vision::object test = v.largestObject;
   int lowerCenterXBound = 0;
     int upperCenterXBound = 0;
-  if (col == blue){
     lowerCenterXBound = 160;
     upperCenterXBound = 170;
-  } 
-  if (col == red) {
-    lowerCenterXBound = 150;
-    upperCenterXBound = 160;
-  }
+
   double leftspeed; 
   double rightspeed; 
   while (test.centerX < lowerCenterXBound || test.centerX > upperCenterXBound) {
