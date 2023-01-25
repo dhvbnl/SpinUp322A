@@ -10,7 +10,7 @@
 
 //comp
 const int redBrightness = 59;
-const int blueBrightness = 150;
+const int blueBrightness = 50;
 //const int yellowBrightness = 25;
 // void findFrontGoal(color col, signature sig, int basespeed, bool right,
 //                    bool check, bool risk) {
@@ -94,22 +94,20 @@ int findGoal(color col, signature sig, bool right) {
     setDrivetrainSpeed(3.5,-3.5);
     printf("right %f \n", 0.0);
   } else {
-    setDrivetrainSpeed(-3.5, 3.5);
+    setDrivetrainSpeed(-4.25, 4.25);
     printf("left %f \n", 0.0);
   }
   // if no objects are detected, turn and check again...
   while (v.objectCount == 0 ||
           v.largestObject.height < 10 ||
           v.largestObject.width < 20) {
-    wait(20, msec);
+    wait(10, msec);
     v.takeSnapshot(sig);
   }
   printf("object found %f \n", 0.0);
   vision::object test = v.largestObject;
-  int lowerCenterXBound = 0;
-    int upperCenterXBound = 0;
-    lowerCenterXBound = 165;
-    upperCenterXBound = 170;
+  int lowerCenterXBound = 173; //165
+  int upperCenterXBound = 179;
 
   double leftspeed; 
   double rightspeed; 

@@ -20,8 +20,12 @@ void testinertial () {
 }
 void testflywheel (color col, signature sig) {
   printf("enterprogram %f \n", 1.0);
+  // setIntakeSpeed(12);
+  // wait(6000, msec);
+  // setIntakeSpeed(0);
   int width = findGoal(col, sig, false);
-  double flywheelvolt = -0.0004*pow(width, 3) + 0.0672 * pow (width, 2) - 3.82 * width + 83.467;
+  double flywheelvolt = -0.0004 * pow(width, 3) + 0.0672 * pow(width, 2) - 3.82 * width + 83.467;
+  printf("flywheelvolt %f", flywheelvolt);
   if (flywheelvolt > 11.5) {
     flywheelvolt = 11.5;
   } 
@@ -36,13 +40,13 @@ void testflywheel (color col, signature sig) {
   // }
   //printf("volt %f \n", flywheelvolt);
 
-    flywheelmanual(9.2);
+    flywheelmanual(9.15);
     wait(5, sec);
     indexmanual(8, true);
 
     for (int i = 0; i < 2; i++) {
       wait(100, msec);
-      indexmanual(0, false);
+      indexmanual(0, false); // up
       wait(3000, msec);
       indexmanual(8, true);
     }
