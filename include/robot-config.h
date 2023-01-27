@@ -33,6 +33,9 @@ extern signature REDGOAL;
 extern digital_out indexerClamp;
 extern digital_out flywheelAdjuster;
 
+extern line flywheelCheck;
+extern line indexerTop;
+
 
 extern triport bExpander;
 

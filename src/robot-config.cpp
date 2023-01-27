@@ -31,7 +31,12 @@ signature REDGOAL = signature (2, 5815, 8417, 7116, 297, 1141, 719, 3.800, 0);
 vision v = vision (PORT9, 25, REDGOAL, BLUEGOAL); 
 
 digital_out indexerClamp = digital_out(Brain.ThreeWirePort.A);
+
 digital_out flywheelAdjuster = digital_out(Brain.ThreeWirePort.B);    
+
+line flywheelCheck = line(Brain.ThreeWirePort.C);
+line indexerTop = line(Brain.ThreeWirePort.D);
+
 
 triport bottomExpander = triport(PORT13);
 triport topExander = triport(PORT7);

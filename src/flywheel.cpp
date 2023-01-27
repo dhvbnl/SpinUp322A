@@ -19,14 +19,13 @@ void setflywheelSpeed() {
   Controller.Screen.clearScreen();
   Controller.Screen.setCursor(0, 0);
   Controller.Screen.print(flywheel.velocity(pct));
-  wait(100, msec);
   if (!flywheelOverride) {
     //
   } else {
     if (getR1Pos() && flywheelDelay > 20) {
       if (flywheelState == 0) {
         if(flywheelAdjuster.value() == 1){
-          flywheelSpeed = 8;
+          flywheelSpeed = 6;
         } else{
           flywheelSpeed = 12;
         }
@@ -37,10 +36,10 @@ void setflywheelSpeed() {
         flywheelState = 0;
       }
       flywheelDelay = 0;
-      flywheel.spin(fwd, flywheelSpeed, volt);
     } else {
       flywheelDelay++;
     }
+    flywheel.spin(fwd, flywheelSpeed, volt);
   }
 }
 
@@ -50,6 +49,7 @@ void flywheelAdjust() {
   if (getL1Pos() && flywheelDelay > 20) {
     flywheelAdjuster.set(true);
     flywheelDelay = 0;
+    flywheelSpeed = 6;
   } else if (getL2Pos() && flywheelDelay > 20) {
     flywheelAdjuster.set(false);
     flywheelDelay = 0;

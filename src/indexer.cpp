@@ -9,54 +9,55 @@ int indexerSpeed = 0;
 void indexerControl() {
   printf("%ld \n", flywheelAdjuster.value());
   while (true) {
-    //set speed based on inputs
+    // set speed based on inputs
     setIndexerSpeed();
     wait(10, msec);
   }
 }
 
 void setIndexerSpeed() {
-if (!indexerOverride) {
+  if (!indexerOverride) {
     //
   } else {
     if (getR2Pos() && indexerDelay > 20) {
       printf("activated \n", flywheelAdjuster.value());
       if (indexerState == 0) {
-        indexerSpeed = 8;
+        indexerSpeed = 12;
         indexerState = 1;
         indexerClamp.set(true);
-      } else if(indexerState == 1){
+      } else if (indexerState == 1) {
         indexerSpeed = 0;
         indexerState = 0;
         indexerClamp.set(false);
       }
       indexerDelay = 0;
-      
+
     } else {
       indexerDelay++;
     }
-    if(flywheelAdjuster.value() == 0 && flywheel.isSpinning()){
-      if(flywheel.velocity(pct) < 70){
-      indexer.spin(fwd, 0, volt);
-      int counter = 0;
-      while(flywheel.velocity(pct) < 75 && counter > 25){
-        counter++;
-        wait(20, msec);
+
+    if (flywheelAdjuster.value() == 0 && flywheel.velocity(pct) != 0) {
+      if (flywheelCheck.value(pct) < 40) {
+        wait(200, msec);
+        indexer.spin(fwd, 0, volt);
+        int counter = 0;
+        while (flywheelCheck.value(pct) < 40) {
+          counter++;
+          wait(20, msec);
+        }
+        wait(700, msec);
+      } else {
+        indexer.spin(fwd, indexerSpeed, volt);
       }
-    } else{
+    } else {
       indexer.spin(fwd, indexerSpeed, volt);
     }
-    } else{
-      indexer.spin(fwd, indexerSpeed, volt);
-    }
-    
-    
   }
 }
 
 // clamp - whether or not clamp is in place
 // speed - speed of indexer
-void indexmanual (double speed, bool clamp) {
+void indexmanual(double speed, bool clamp) {
   indexer.spin(fwd, speed, volt);
   indexerClamp.set(clamp);
 }
