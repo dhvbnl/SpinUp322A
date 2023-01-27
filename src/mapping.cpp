@@ -74,3 +74,37 @@ void testarea(color col, signature sig) {
     v.takeSnapshot(sig);
   }
 }
+
+void leftfromredgoal() {
+  //   while(inert.isCalibrating()) {
+  //   wait(100, msec);
+  // }
+  // timeDrive(4, 500);
+  // setIntakeSpeed(-7);
+  // wait(150, msec);
+  // setIntakeSpeed(0);
+  // timeDrive(4, -700);
+  // drivetrainTurn(230);
+  // setIntakeSpeed(8);
+  // printf("inertial %f \n", getInertialHeading());
+  // timeDrive(7, 1500);
+  // wait(200, msec);
+  // drivetrainTurn(300);
+  // wait(200, msec);
+  // setIntakeSpeed(0);
+  findGoal(blue, BLUEGOAL, true);
+    double flywheelVoltage = 9.5;
+    flywheelmanual(flywheelVoltage);
+    double flywheelVelocity = (flywheelVoltage / 12.0) * 100;
+    for (int i = 0; i < 4; i++) {
+      printf("Iteration %f", i* 1.0);
+      while (flywheel.velocity(pct) < (flywheelVelocity - 10.50)) {
+        printf("velocity %f \n", flywheel.velocity(pct));
+        wait(20, msec);
+      }
+      indexmanual(8, true);
+      wait(100, msec);
+      indexmanual(0, false);
+      wait(100, msec);
+    }
+}

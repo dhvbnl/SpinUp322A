@@ -10,7 +10,7 @@
 
 //comp
 const int redBrightness = 59;
-const int blueBrightness = 50;
+const int blueBrightness = 150;
 //const int yellowBrightness = 25;
 // void findFrontGoal(color col, signature sig, int basespeed, bool right,
 //                    bool check, bool risk) {
@@ -91,10 +91,10 @@ int findGoal(color col, signature sig, bool right) {
 
   v.takeSnapshot(sig);
   if (right) {
-    setDrivetrainSpeed(3.5,-3.5);
+    setDrivetrainSpeed(5.5,-5.5);
     printf("right %f \n", 0.0);
   } else {
-    setDrivetrainSpeed(-4.25, 4.25);
+    setDrivetrainSpeed(-5.5, 5.5);
     printf("left %f \n", 0.0);
   }
   // if no objects are detected, turn and check again...
