@@ -29,7 +29,7 @@ void expansionRelease() {
   if (getUpPos() || expansionReady == true) {
     expansionReady = true;
     if(getRightPos()){
-      expansion.set(true);
+      expansion.set(!expansion.value());
       wait(200, msec);
     }
   }

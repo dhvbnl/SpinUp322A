@@ -4,7 +4,7 @@ bool flywheelOverride = true;
 
 int flywheelState = 0;
 int flywheelDelay = 0;
-int flywheelSpeed = 0;
+double flywheelSpeed = 0;
 
 void flywheelControl() {
   while (true) {
@@ -53,6 +53,7 @@ void flywheelAdjust() {
   } else if (getL2Pos() && flywheelDelay > 20) {
     flywheelAdjuster.set(false);
     flywheelDelay = 0;
+    setIndexerSpeed(true, true);
   }
   { flywheelDelay++; }
 }

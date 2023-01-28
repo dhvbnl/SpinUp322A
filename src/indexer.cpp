@@ -10,18 +10,28 @@ void indexerControl() {
   printf("%ld \n", flywheelAdjuster.value());
   while (true) {
     // set speed based on inputs
-    setIndexerSpeed();
+    setIndexerSpeed(false, false);
     wait(10, msec);
   }
 }
 
-void setIndexerSpeed() {
+void setIndexerSpeed(bool force, bool up) {
   if (!indexerOverride) {
     //
   } else {
-    if (getR2Pos() && indexerDelay > 20) {
+    if ((getR2Pos() && indexerDelay > 20) || force) {
       printf("activated \n", flywheelAdjuster.value());
-      if (indexerState == 0) {
+      if(force){
+        if(up){
+          indexerSpeed = 0;
+        indexerState = 0;
+        indexerClamp.set(false);
+        } else{
+          indexerSpeed = 12;
+        indexerState = 1;
+        indexerClamp.set(true);
+        }
+      } else if (indexerState == 0) {
         indexerSpeed = 12;
         indexerState = 1;
         indexerClamp.set(true);

@@ -55,7 +55,7 @@ Button autonButtons[] = {
     Button(2 * spacing + xSize, spacing, xSize, ySize, "LEFT", black, white),
 
     Button(3 * spacing + 2 * xSize, 10, xSize, ySize, "BOTH", black, white),
-    Button(4 * spacing + 3 * xSize, 10, xSize, ySize, "MID", black, white),
+    Button(4 * spacing + 3 * xSize, 10, xSize, ySize, "SKILLS", black, white),
 
     Button(spacing, spacing * 2 + ySize, xSize, ySize, "WIN", black, white),
     Button(spacing * 2 + xSize, spacing * 2 + ySize, xSize, ySize, "SKILLS", black,
@@ -76,7 +76,7 @@ void autonomous(void) {
       break;
     case 2: bothrollers(red, REDGOAL);
       break;
-    case 3:
+    case 3: skills(red, REDGOAL);
       break;
     case 4: // code
       break;
@@ -95,7 +95,7 @@ void autonomous(void) {
       break;
     case 2: bothrollers(blue, BLUEGOAL);
       break;
-    case 3:
+    case 3: skills(blue, BLUEGOAL);
       break;
     case 4: // code
       break;

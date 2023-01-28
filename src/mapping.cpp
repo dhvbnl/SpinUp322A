@@ -92,19 +92,30 @@ void leftroller(color col, signature sig) {
   setIntakeSpeed(-7);
   wait(150, msec);
   setIntakeSpeed(0);
-  timeDrive(4, -700);
+  timeDrive(-4, 400);
+  drivetrainTurn(353);
+  flywheelmanual(11);
+  setindexerClamp();
+  wait(3, sec);
+  int count = 0;
+  while (count < 2 ) {
+    count = indexerauton(count);
+    printf("count %f \n", double(count));
+    wait(1200, msec); //2000
+  }
+  setindexerClamp();
   drivetrainTurn(235);
   setIntakeSpeed(12);
   printf("inertial %f \n", getInertialHeading());
   timeDrive(5, 2000);
   wait(200, msec);
   flywheelmanual(10);
-  drivetrainTurn(300);
+  drivetrainTurn(310);
   wait(500, msec);
   setIntakeSpeed(0);
   findGoal(col, sig, true);
   printf("reached %f \n", 0.0);
-  int count = 0;
+  count = 0;
  // timer t;
   wait(1000, msec);
   setindexerClamp();
@@ -161,4 +172,14 @@ void rightroller (color col, signature sig) {
     wait(1200, msec); //2000
   }
   
+}
+
+void skills (color col, signature sig) {
+  leftroller(col, sig);
+  wait(1000, sec);
+  drivetrainTurn(getInertialHeading() + 90);
+  wait(100, msec);
+  timeDrive(5, 500);
+  expansion.set(true);
+
 }

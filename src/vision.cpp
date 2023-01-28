@@ -9,8 +9,8 @@
 //const int yellowBrightness = 12;
 
 //comp
-const int redBrightness = 59;
-const int blueBrightness = 150;
+const int redBrightness = 67;
+const int blueBrightness = 88;
 //const int yellowBrightness = 25;
 // void findFrontGoal(color col, signature sig, int basespeed, bool right,
 //                    bool check, bool risk) {

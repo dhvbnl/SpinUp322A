@@ -1,6 +1,6 @@
 void indexerControl();
 
-void setIndexerSpeed();
+void setIndexerSpeed(bool force, bool up);
 
 void indexmanual(double speed, bool clamp);
 

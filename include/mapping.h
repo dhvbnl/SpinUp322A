@@ -6,3 +6,5 @@ void testinertial();
 void leftroller(vex::color col, vex::vision::signature sig);
 void bothrollers(vex::color col, vex::vision::signature sig);
 void rightroller(vex::color col, vex::vision::signature sig);
+
+void skills(vex::color col, vex::vision::signature sig);
