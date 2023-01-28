@@ -36,16 +36,16 @@ void setIndexerSpeed() {
       indexerDelay++;
     }
 
-    if (flywheelAdjuster.value() == 0 && flywheel.velocity(pct) != 0) {
+    if (flywheel.velocity(pct) != 0) {
       if (flywheelCheck.value(pct) < 40) {
-        wait(200, msec);
-        indexer.spin(fwd, 0, volt);
+        //wait(25, msec);
+        indexer.stop(brake);
         int counter = 0;
         while (flywheelCheck.value(pct) < 40) {
           counter++;
           wait(20, msec);
         }
-        wait(700, msec);
+        wait(500, msec);
       } else {
         indexer.spin(fwd, indexerSpeed, volt);
       }
