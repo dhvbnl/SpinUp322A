@@ -17,7 +17,12 @@ void preauton() {
   setDrivetrainCreep();
 
   //calibrate inertial sensor
-  //calibrateInertial();
+  calibrateInertial();
+  while(inert.isCalibrating()) {
+    wait(100, msec);
+  }
+
+  Controller.Screen.print("preauton");
   //frontVision.setLedColor(0, 255, 0);
   //rearVision.setLedColor(0, 255, 0);
   //Controller.Screen.print("Preauton Complete");

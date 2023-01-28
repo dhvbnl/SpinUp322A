@@ -51,10 +51,10 @@ int xSize = 107;
 int ySize = 107;
 
 Button autonButtons[] = {
-    Button(spacing, spacing, xSize, ySize, "NWIN", purple, white),
-    Button(2 * spacing + xSize, spacing, xSize, ySize, "RIGHT", black, white),
+    Button(spacing, spacing, xSize, ySize, "RIGHT", purple, white),
+    Button(2 * spacing + xSize, spacing, xSize, ySize, "LEFT", black, white),
 
-    Button(3 * spacing + 2 * xSize, 10, xSize, ySize, "LEFT", black, white),
+    Button(3 * spacing + 2 * xSize, 10, xSize, ySize, "BOTH", black, white),
     Button(4 * spacing + 3 * xSize, 10, xSize, ySize, "MID", black, white),
 
     Button(spacing, spacing * 2 + ySize, xSize, ySize, "WIN", black, white),
@@ -70,11 +70,11 @@ Button autonButtons[] = {
 void autonomous(void) {
   if (redSide) {
     switch (autonToRun) {
-    case 0: leftfromredgoal();
+    case 0: rightroller(red, REDGOAL);
       break;
-    case 1:
+    case 1:leftroller(red, REDGOAL);
       break;
-    case 2:
+    case 2: bothrollers(red, REDGOAL);
       break;
     case 3:
       break;
@@ -89,11 +89,11 @@ void autonomous(void) {
     }
   } else {
     switch (autonToRun) {
-    case 0:
-      testvision(red, REDGOAL);
-    case 1:
+    case 0: rightroller(blue, BLUEGOAL);
       break;
-    case 2:
+    case 1: leftroller(blue, BLUEGOAL);
+      break;
+    case 2: bothrollers(blue, BLUEGOAL);
       break;
     case 3:
       break;
@@ -112,7 +112,7 @@ void autonomous(void) {
 int main() {
   Competition.autonomous(autonomous);
   Competition.drivercontrol(opcontrol);
-  //preauton();
+  preauton();
   
   while (true) {
     if (!Competition.isEnabled()) {

@@ -91,10 +91,10 @@ int findGoal(color col, signature sig, bool right) {
 
   v.takeSnapshot(sig);
   if (right) {
-    setDrivetrainSpeed(5.5,-5.5);
+    setDrivetrainSpeed(5.0,-5.0);
     printf("right %f \n", 0.0);
   } else {
-    setDrivetrainSpeed(-5.5, 5.5);
+    setDrivetrainSpeed(-5.0, 5.0);
     printf("left %f \n", 0.0);
   }
   // if no objects are detected, turn and check again...
@@ -106,20 +106,20 @@ int findGoal(color col, signature sig, bool right) {
   }
   printf("object found %f \n", 0.0);
   vision::object test = v.largestObject;
-  int lowerCenterXBound = 173; //165
-  int upperCenterXBound = 179;
+  int lowerCenterXBound = 170; //165
+  int upperCenterXBound = 178; //157.5 = exact center
 
   double leftspeed; 
   double rightspeed; 
   while (test.centerX < lowerCenterXBound || test.centerX > upperCenterXBound) {
     if (test.centerX < lowerCenterXBound) {
-      leftspeed = -2.5;
-      rightspeed = 2.5;
+      leftspeed = -3.2;
+      rightspeed = 3.2;
       printf("turn right %f \n", double(test.centerX));
     } 
      else if (test.centerX > upperCenterXBound) {
-      leftspeed = 2.5; 
-      rightspeed = -2.5;
+      leftspeed = 3.2; 
+      rightspeed = -3.2;
       printf("turn left %f \n", double(test.centerX));
     } else {
       leftspeed = 0;

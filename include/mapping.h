@@ -3,4 +3,6 @@ void testvision(vex::color col, vex::vision::signature sig);
 void testflywheel(vex::color col, vex::vision::signature sig);
 void testarea(vex::color col, vex::vision::signature sig);
 void testinertial();
-void leftfromredgoal();
+void leftroller(vex::color col, vex::vision::signature sig);
+void bothrollers(vex::color col, vex::vision::signature sig);
+void rightroller(vex::color col, vex::vision::signature sig);

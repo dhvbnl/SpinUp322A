@@ -75,36 +75,90 @@ void testarea(color col, signature sig) {
   }
 }
 
-void leftfromredgoal() {
-  //   while(inert.isCalibrating()) {
-  //   wait(100, msec);
-  // }
-  // timeDrive(4, 500);
-  // setIntakeSpeed(-7);
-  // wait(150, msec);
-  // setIntakeSpeed(0);
-  // timeDrive(4, -700);
-  // drivetrainTurn(230);
-  // setIntakeSpeed(8);
-  // printf("inertial %f \n", getInertialHeading());
-  // timeDrive(7, 1500);
-  // wait(200, msec);
-  // drivetrainTurn(300);
-  // wait(200, msec);
-  // setIntakeSpeed(0);
-  findGoal(blue, BLUEGOAL, true);
-    double flywheelVoltage = 9.5;
-    flywheelmanual(flywheelVoltage);
-    double flywheelVelocity = (flywheelVoltage / 12.0) * 100;
-    for (int i = 0; i < 4; i++) {
-      printf("Iteration %f", i* 1.0);
-      while (flywheel.velocity(pct) < (flywheelVelocity - 10.50)) {
-        printf("velocity %f \n", flywheel.velocity(pct));
-        wait(20, msec);
-      }
-      indexmanual(8, true);
-      wait(100, msec);
-      indexmanual(0, false);
-      wait(100, msec);
-    }
+int indexerauton(int count) {
+  while(flywheelCheck.value(pct) >= 40) { // disc not in place it should be
+    indexer.spin(fwd, 12, volt);
+    wait(30, msec);
+  }
+  indexer.spin(fwd, -5, volt);
+  wait(30, msec);
+  indexer.spin(fwd, 0, volt);
+  count++;
+  return count;
+}
+
+void leftroller(color col, signature sig) {
+  timeDrive(4, 500);
+  setIntakeSpeed(-7);
+  wait(150, msec);
+  setIntakeSpeed(0);
+  timeDrive(4, -700);
+  drivetrainTurn(235);
+  setIntakeSpeed(12);
+  printf("inertial %f \n", getInertialHeading());
+  timeDrive(5, 2000);
+  wait(200, msec);
+  flywheelmanual(10);
+  drivetrainTurn(300);
+  wait(500, msec);
+  setIntakeSpeed(0);
+  findGoal(col, sig, true);
+  printf("reached %f \n", 0.0);
+  int count = 0;
+ // timer t;
+  wait(1000, msec);
+  setindexerClamp();
+  while (count < 3 ) {
+    count = indexerauton(count);
+    printf("count %f \n", double(count));
+    wait(1200, msec); //2000
+  }
+}
+
+void bothrollers (color col, signature sig) {
+  leftroller(col, sig);
+  printf("done %f \n", 0.0);
+  flywheelmanual(0);
+  setindexerClamp();
+  drivetrainTurn(207);
+  setIntakeSpeed(12);
+  timeDrive(9, 2500);
+  setIntakeSpeed(0);
+  drivetrainTurn(270);
+  timeDrive(6, 300);
+  setIntakeSpeed(-7);
+  wait(150, msec);
+  setIntakeSpeed(0);
+  timeDrive(4, -700);
+
+}
+
+void rightroller (color col, signature sig) {
+  timeDrive(6, 700);
+  drivetrainTurn(90);
+  timeDrive(6, 300);
+  setIntakeSpeed(-7);
+  wait(100, msec);
+  setIntakeSpeed(0);
+  timeDrive(4, -700);
+  drivetrainTurn(220);
+  setIntakeSpeed(12);
+  timeDrive(5, 1500);
+  wait(200, msec);
+  flywheelmanual(10);
+  drivetrainTurn(170);
+  wait(500, msec);
+  setIntakeSpeed(0);
+  findGoal(col, sig, false);
+  printf("reached %f \n", 0.0);
+  int count = 0;
+ // timer t;
+  wait(1000, msec);
+  setindexerClamp();
+  while (count < 3 ) {
+    count = indexerauton(count);
+    printf("count %f \n", double(count));
+    wait(1200, msec); //2000
+  }
+  
 }

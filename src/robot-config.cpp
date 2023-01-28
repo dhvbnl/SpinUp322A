@@ -25,8 +25,8 @@ motor rightIntake = motor(PORT10, ratio6_1, false);
 inertial inert = inertial(PORT17);
 
 //signature BLUEGOAL = signature (1, -4829, -683, -2756, 7021, 15639, 11330, 1.600, 0);
-signature BLUEGOAL = signature (1, -3923, 2235, -844, 5783, 14261, 10022, 1.300, 0);
-signature REDGOAL = signature (2, 5815, 8417, 7116, 297, 1141, 719, 3.800, 0);
+signature BLUEGOAL = signature (1, -4097, -929, -2513, 7637, 11285, 9461, 3.800, 0);
+signature REDGOAL = signature (2, 9545, 10547, 10046, -2979, 625, -1177, 10.700, 0);
 
 vision v = vision (PORT9, 25, REDGOAL, BLUEGOAL); 
 
