@@ -34,6 +34,8 @@ digital_out indexerClamp = digital_out(Brain.ThreeWirePort.A);
 
 digital_out flywheelAdjuster = digital_out(Brain.ThreeWirePort.B);    
 
+digital_out expansion = digital_out(Brain.ThreeWirePort.E);   
+
 line flywheelCheck = line(Brain.ThreeWirePort.C);
 line indexerTop = line(Brain.ThreeWirePort.D);
 

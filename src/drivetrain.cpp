@@ -1,12 +1,14 @@
 #include "vex.h"
 
 int stopTimer = 0;
+bool expansionReady = false;
 
 //thread for drivetrain to respond to joystick movements
 void drivetrainControl() {
   while (true) {
     //set speed based on inputs
     setDrivetrainSpeed(getLeftSpeedInLinear(), getRightSpeedInLinear());
+    expansionRelease();
     //setDrivetrainStopping();
     //stopTimer++;
     wait(10, msec);
@@ -21,6 +23,16 @@ void setDrivetrainSpeed(double leftSpeed, double rightSpeed) {
   rightFrontDrive.spin(fwd, rightSpeed, volt);
   rightBackDrive.spin(fwd, rightSpeed, volt);
   
+}
+
+void expansionRelease() {
+  if (getUpPos() || expansionReady == true) {
+    expansionReady = true;
+    if(getRightPos()){
+      expansion.set(true);
+      wait(200, msec);
+    }
+  }
 }
 
 void setDrivetrainStopping(){

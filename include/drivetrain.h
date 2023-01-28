@@ -10,6 +10,8 @@ void startBalance();
 //setters
 void setDrivetrainSpeed(double leftSpeed, double rightSpeed);
 
+void expansionRelease();
+
 void setDrivetrainStopping();
 void setDrivetrainCreep();
 void setDrivetrainLock();

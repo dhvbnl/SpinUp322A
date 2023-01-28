@@ -25,7 +25,7 @@ void setflywheelSpeed() {
     if (getR1Pos() && flywheelDelay > 20) {
       if (flywheelState == 0) {
         if(flywheelAdjuster.value() == 1){
-          flywheelSpeed = 8;
+          flywheelSpeed = 7;
         } else{
           flywheelSpeed = 12;
         }
@@ -49,7 +49,7 @@ void flywheelAdjust() {
   if (getL1Pos() && flywheelDelay > 20) {
     flywheelAdjuster.set(true);
     flywheelDelay = 0;
-    flywheelSpeed = 6;
+    flywheelSpeed = 7;
   } else if (getL2Pos() && flywheelDelay > 20) {
     flywheelAdjuster.set(false);
     flywheelDelay = 0;
