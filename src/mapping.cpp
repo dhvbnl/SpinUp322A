@@ -94,7 +94,7 @@ void leftroller(color col, signature sig) {
   setIntakeSpeed(0);
   timeDrive(-4, 400);
   drivetrainTurn(353);
-  flywheelmanual(11);
+  flywheelmanual(10.7);
   setindexerClamp();
   wait(3, sec);
   int count = 0;
