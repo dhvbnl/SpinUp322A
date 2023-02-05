@@ -28,7 +28,7 @@ inertial inert = inertial(PORT17);
 // signature BLUEGOAL = signature (1, -4097, -929, -2513, 7637, 11285, 9461, 3.800, 0);
 // signature REDGOAL = signature (2, 9545, 10547, 10046, -2979, 625, -1177, 10.700, 0);
 
-signature BLUEGOAL (1, -1713, -1329, -1521, 3805, 5975, 4890, 2.600, 0);
+signature BLUEGOAL (1, -2731, -697, -1714, 7531, 9729, 8630, 4.300, 0);
 signature REDGOAL (2, 8353, 9875, 9114, -1347, 425, -461, 4.700, 0);
 vision v = vision (PORT9, 25, REDGOAL, BLUEGOAL); 
 

@@ -18,17 +18,52 @@ void testinertial () {
 
 
 }
+
+int indexerauton(int count, double velbefore) {
+  // while(flywheelCheck.value(pct) >= 40) { // disc not in place it should be
+  while (flywheel.velocity(pct) >= velbefore) {
+    indexer.spin(fwd, 12, volt);
+    wait(30, msec);
+  }
+  indexer.spin(fwd, -5, volt);
+  wait(30, msec);
+  indexer.spin(fwd, 0, volt);
+  count++;
+  return count;
+}
+
+void indexnew(int count, double velbefore) {
+  int i = 0;
+  while (i < count) {
+    if (flywheel.velocity(pct) >= velbefore) {
+      printf("flywheel velocity %f \n", flywheel.velocity(pct));
+      indexer.spin(fwd, 100, pct);
+      while(flywheelCheck.value(pct) > 10) { //wait for disk to reach flywheel
+       // printf("waitforflywheel %lo \n", flywheelCheck.value(pct));
+        //wait(10, msec);
+      }
+      while (flywheelCheck.value(pct) < 10) { //wait for disk to pass flywheel
+       // printf("check %lo \n", flywheelCheck.value(pct));
+        //wait(10, msec);
+      }
+      i++;
+    }
+    indexer.spin(fwd, -60, pct);
+    wait(100, msec);
+    //printf("count %i \n", i);
+    indexer.stop();
+    wait(20, msec);
+  } 
+
+}
+
 void testflywheel (color col, signature sig) {
   printf("enterprogram %f \n", 1.0);
+  //findGoal(col, sig, true);
   // setIntakeSpeed(12);
   // wait(6000, msec);
   // setIntakeSpeed(0);
   int width = findGoal(col, sig, false);
-  double flywheelvolt = -0.0004 * pow(width, 3) + 0.0672 * pow(width, 2) - 3.82 * width + 83.467;
-  printf("flywheelvolt %f", flywheelvolt);
-  if (flywheelvolt > 11.5) {
-    flywheelvolt = 11.5;
-  } 
   // if (width > 70) {
   //   flywheelvolt = 8.7;
   // } else if (width > 55) {
@@ -39,18 +74,20 @@ void testflywheel (color col, signature sig) {
   //   flywheelvolt = 11.5;
   // }
   //printf("volt %f \n", flywheelvolt);
+  printf("width %i \n", width);
+  //SPEEDS (Velocity pct) | WIDTH | MARKER (front of robot) | # MADE
+  //65 | 52 | 2 | 2
+  // 65 | 48 | 2 |1 
+  // 65 | 
+  int flywheelspin = 65;
+  flywheelmanual(flywheelspin);
+  while(flywheel.velocity(pct) < flywheelspin) {
+    wait(20, msec);
+  }
+  printf("flywheel velocity before %f \n", flywheel.velocity(pct));
+  indexnew(3, flywheelspin);
+  flywheelmanual(0);
 
-    flywheelmanual(9.15);
-    wait(5, sec);
-    indexmanual(8, true);
-
-    for (int i = 0; i < 2; i++) {
-      wait(100, msec);
-      indexmanual(0, false); // up
-      wait(3000, msec);
-      indexmanual(8, true);
-    }
-    
     
   //flywheelmanual(12);
 }
@@ -75,18 +112,6 @@ void testarea(color col, signature sig) {
   }
 }
 
-int indexerauton(int count) {
-  while(flywheelCheck.value(pct) >= 40) { // disc not in place it should be
-    indexer.spin(fwd, 12, volt);
-    wait(30, msec);
-  }
-  indexer.spin(fwd, -5, volt);
-  wait(30, msec);
-  indexer.spin(fwd, 0, volt);
-  count++;
-  return count;
-}
-
 void leftroller(color col, signature sig) {
   timeDrive(4, 500);
   setIntakeSpeed(-7);
@@ -99,7 +124,7 @@ void leftroller(color col, signature sig) {
   wait(3, sec);
   int count = 0;
   while (count < 2 ) {
-    count = indexerauton(count);
+    //count = indexerauton(count, 0);
     printf("count %f \n", double(count));
     wait(1200, msec); //2000
   }
@@ -120,7 +145,7 @@ void leftroller(color col, signature sig) {
   wait(1000, msec);
   setindexerClamp();
   while (count < 3 ) {
-    count = indexerauton(count);
+    //count = indexerauton(count, 0);
     printf("count %f \n", double(count));
     wait(1200, msec); //2000
   }
@@ -167,7 +192,7 @@ void rightroller (color col, signature sig) {
   wait(1000, msec);
   setindexerClamp();
   while (count < 3 ) {
-    count = indexerauton(count);
+    //count = indexerauton(count, 0);
     printf("count %f \n", double(count));
     wait(1200, msec); //2000
   }

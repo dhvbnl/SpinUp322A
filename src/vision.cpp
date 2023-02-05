@@ -113,13 +113,13 @@ int findGoal(color col, signature sig, bool right) {
   double rightspeed; 
   while (test.centerX < lowerCenterXBound || test.centerX > upperCenterXBound) {
     if (test.centerX < lowerCenterXBound) {
-      leftspeed = -3.2;
-      rightspeed = 3.2;
+      leftspeed = -2.5;
+      rightspeed = 2.5;
       printf("turn right %f \n", double(test.centerX));
     } 
      else if (test.centerX > upperCenterXBound) {
-      leftspeed = 3.2; 
-      rightspeed = -3.2;
+      leftspeed = 2.5; 
+      rightspeed = -2.5;
       printf("turn left %f \n", double(test.centerX));
     } else {
       leftspeed = 0;
