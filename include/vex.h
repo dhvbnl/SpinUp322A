@@ -27,6 +27,7 @@
 #include "vision.h"
 #include "mapping.h"
 #include "preaution.h"
+#include "motionprofile.h"
 
 //convert between velocity and voltage.
 const double voltageConverstion = 100/12;

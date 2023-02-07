@@ -35,7 +35,7 @@ int indexerauton(int count, double velbefore) {
 void indexnew(int count, double velbefore) {
   int i = 0;
   while (i < count) {
-    if (flywheel.velocity(pct) >= velbefore) {
+    if (flywheel.velocity(pct) >= velbefore - 1 && flywheel.velocity(pct) <= velbefore + 1) {
       printf("flywheel velocity %f \n", flywheel.velocity(pct));
       indexer.spin(fwd, 100, pct);
       while(flywheelCheck.value(pct) > 10) { //wait for disk to reach flywheel
@@ -63,7 +63,7 @@ void testflywheel (color col, signature sig) {
   // setIntakeSpeed(12);
   // wait(6000, msec);
   // setIntakeSpeed(0);
-  int width = findGoal(col, sig, false);
+  int width = findGoal(col, sig, true);
   // if (width > 70) {
   //   flywheelvolt = 8.7;
   // } else if (width > 55) {
@@ -79,7 +79,7 @@ void testflywheel (color col, signature sig) {
   //65 | 52 | 2 | 2
   // 65 | 48 | 2 |1 
   // 65 | 
-  int flywheelspin = 65;
+  double flywheelspin = 66;
   flywheelmanual(flywheelspin);
   while(flywheel.velocity(pct) < flywheelspin) {
     wait(20, msec);
@@ -152,19 +152,23 @@ void leftroller(color col, signature sig) {
 }
 
 void bothrollers (color col, signature sig) {
-  leftroller(col, sig);
-  printf("done %f \n", 0.0);
-  flywheelmanual(0);
-  setindexerClamp();
-  drivetrainTurn(207);
-  setIntakeSpeed(12);
+  timeDrive(4, 500);
+  //setIntakeSpeed(-7);
+  wait(150, msec);
+  //setIntakeSpeed(0);
+  timeDrive(-4, 400);
+  // printf("done %f \n", 0.0);
+  
+  drivetrainTurn(230);
+  printf("inertial %f \n", getInertialHeading());
+  //setIntakeSpeed(12);
   timeDrive(9, 2500);
-  setIntakeSpeed(0);
+  //setIntakeSpeed(0);
   drivetrainTurn(270);
   timeDrive(6, 300);
-  setIntakeSpeed(-7);
+  //setIntakeSpeed(-7);
   wait(150, msec);
-  setIntakeSpeed(0);
+  //setIntakeSpeed(0);
   timeDrive(4, -700);
 
 }
@@ -207,4 +211,33 @@ void skills (color col, signature sig) {
   timeDrive(5, 500);
   expansion.set(true);
 
+}
+
+void straightline(double speed, int timedrive) {
+  timer t; 
+  while (t.time(msec) < timedrive) {
+    leftFrontDrive.spin(fwd, speed, pct);
+    rightFrontDrive.spin(fwd, speed, pct);
+    leftBackDrive.spin(fwd, speed, pct);
+    rightBackDrive.spin(fwd, speed, pct);
+
+    if (leftFrontDrive.velocity(pct) < speed) {
+      leftFrontDrive.spin(fwd, speed + 2, pct);
+      rightFrontDrive.spin(fwd, speed - 2, pct);
+      leftBackDrive.spin(fwd, speed + 2, pct);
+      rightBackDrive.spin(fwd, speed - 2, pct);
+    }
+    if (rightFrontDrive.velocity(pct) < speed) {
+      leftFrontDrive.spin(fwd, speed - 2, pct);
+      rightFrontDrive.spin(fwd, speed + 2, pct);
+      leftBackDrive.spin(fwd, speed - 2, pct);
+      rightBackDrive.spin(fwd, speed + 2, pct);
+    }
+    printf("time %f \n", t.time(msec));
+    wait(20, msec);
+  }
+  leftFrontDrive.spin(fwd, 0, pct);
+  rightFrontDrive.spin(fwd, 0, pct);
+  leftBackDrive.spin(fwd, 0, pct);
+  rightBackDrive.spin(fwd, 0, pct);
 }
