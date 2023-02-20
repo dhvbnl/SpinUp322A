@@ -9,13 +9,13 @@ void testinertial () {
     wait(100, msec);
   }
   printf("inertial before %f \n", getInertialHeading());
-  drivetrainTurn(200);
+  drivetrainTurn(120);
   wait(200, msec);
   printf("inertial after %f \n", getInertialHeading());
   setDrivetrainSpeed(3, 3);
   wait(500, msec);
   setDrivetrainSpeed(0, 0);
-
+  printf("inertial final %f \n", getInertialHeading());
 
 }
 

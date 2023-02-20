@@ -9,11 +9,13 @@ brain Brain;
 controller Controller = controller(primary);
 
 /* ENTER CORRECT PORTS FOR MOTORS*/
-motor leftFrontDrive = motor(PORT14, ratio6_1, true);
-motor leftBackDrive = motor(PORT13, ratio6_1, true);
+motor leftFrontDrive = motor(PORT5, ratio6_1, true);
+motor leftBackDrive = motor(PORT14, ratio6_1, true);
+motor leftMiddleDrive = motor(PORT15, ratio6_1, false); 
 
-motor rightFrontDrive = motor(PORT19, ratio6_1, false);
-motor rightBackDrive = motor(PORT20, ratio6_1, false);
+motor rightFrontDrive = motor(PORT9, ratio6_1, false);
+motor rightBackDrive = motor(PORT16, ratio6_1, false);
+motor rightMiddleDrive = motor(PORT10, ratio6_1, true);
 
 motor flywheel = motor(PORT4, ratio6_1, false);
 

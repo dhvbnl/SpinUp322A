@@ -233,9 +233,9 @@ void arcturnTime (double left, double right, int length) {
 
 void drivetrainTurn(double targetdeg) {
 
-  double kP = .9; //.9
+  double kP = 0.9; //.9
   double kI = 0.000;
-  double kD = 0.25; //.25
+  double kD = 0.35; //.25
 
   // PID loop variables
   double error = 0.0;
