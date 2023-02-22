@@ -11,16 +11,20 @@ extern motor leftFrontDrive;
 extern motor rightFrontDrive;
 extern motor leftBackDrive;
 extern motor rightBackDrive;
+extern motor leftMiddleDrive;
+extern motor rightMiddleDrive;
 
 //intake/dr4b shared motor
-extern motor leftIntake;
-extern motor rightIntake;
+// extern motor leftIntake;
+// extern motor rightIntake;
 
 //intake 
 extern motor flywheel;
 
+extern motor intake;
+
 //goal rotator
-extern motor indexer;
+// extern motor indexer;
 
 //sensors
 extern inertial inert;

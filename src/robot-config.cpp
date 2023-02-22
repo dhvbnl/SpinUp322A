@@ -19,10 +19,12 @@ motor rightMiddleDrive = motor(PORT10, ratio6_1, true);
 
 motor flywheel = motor(PORT4, ratio6_1, false);
 
-motor indexer = motor(PORT18, ratio18_1, true);
+// motor indexer = motor(PORT18, ratio18_1, true);
 
-motor leftIntake = motor(PORT2, ratio6_1, true);
-motor rightIntake = motor(PORT10, ratio6_1, false);
+// motor leftIntake = motor(PORT2, ratio6_1, true);
+// motor rightIntake = motor(PORT10, ratio6_1, false);
+
+motor intake = motor(PORT20, ratio6_1, false);
 
 inertial inert = inertial(PORT17);
 

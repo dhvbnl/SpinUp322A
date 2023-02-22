@@ -20,8 +20,10 @@ void drivetrainControl() {
 void setDrivetrainSpeed(double leftSpeed, double rightSpeed) {
   leftFrontDrive.spin(fwd, leftSpeed, volt);
   leftBackDrive.spin(fwd, leftSpeed, volt);
+  leftMiddleDrive.spin(fwd, leftSpeed, volt);
   rightFrontDrive.spin(fwd, rightSpeed, volt);
   rightBackDrive.spin(fwd, rightSpeed, volt);
+  rightMiddleDrive.spin(fwd, rightSpeed, volt);
   
 }
 
@@ -48,12 +50,16 @@ void setDrivetrainStopping(){
 void setDrivetrainCreep() {
   leftFrontDrive.setStopping(coast);
   leftBackDrive.setStopping(coast);
+  leftMiddleDrive.setStopping(coast);
+  rightMiddleDrive.setStopping(coast);
   rightFrontDrive.setStopping(coast);
   rightBackDrive.setStopping(coast);
 }
 void setDrivetrainLock() {
   leftFrontDrive.setStopping(brake);
   leftBackDrive.setStopping(brake);
+  leftMiddleDrive.setStopping(brake);
+  rightMiddleDrive.setStopping(brake);
   rightFrontDrive.setStopping(brake);
   rightBackDrive.setStopping(brake);
 }
@@ -61,6 +67,8 @@ void setDrivetrainLock() {
 void setDrivetrainHold() {
   leftFrontDrive.setStopping(hold);
   leftBackDrive.setStopping(hold);
+  leftMiddleDrive.setStopping(hold);
+  rightMiddleDrive.setStopping(hold);
   rightFrontDrive.setStopping(hold);
   rightBackDrive.setStopping(hold);
 }
@@ -193,6 +201,8 @@ void timeDrive(double speed, int timeLength) {
   rightFrontDrive.spin(fwd, speed, volt);
   leftBackDrive.spin(fwd, speed, volt);
   rightBackDrive.spin(fwd, speed, volt);
+  leftMiddleDrive.spin(fwd, speed, volt);
+  rightMiddleDrive.spin(fwd, speed, volt);
 
   wait(timeLength, msec);
 
@@ -200,6 +210,8 @@ void timeDrive(double speed, int timeLength) {
   rightFrontDrive.stop();
   leftBackDrive.stop();
   rightBackDrive.stop();
+  leftMiddleDrive.stop();
+  rightMiddleDrive.stop();
 }
 
 
@@ -303,13 +315,17 @@ void drivetrainTurn(double targetdeg) {
     if (!useright) {
       leftFrontDrive.spin(fwd, -motorPower, volt);
       leftBackDrive.spin(fwd, -motorPower, volt);
+      leftMiddleDrive.spin(fwd, -motorPower, volt);
       rightFrontDrive.spin(fwd, motorPower, volt);
       rightBackDrive.spin(fwd, motorPower, volt);
+      rightMiddleDrive.spin(fwd, motorPower, volt);
     } else {
       leftFrontDrive.spin(fwd, motorPower, volt);
       leftBackDrive.spin(fwd, motorPower, volt);
+      leftMiddleDrive.spin(fwd, motorPower, volt);
       rightFrontDrive.spin(fwd, -motorPower, volt);
       rightBackDrive.spin(fwd, -motorPower, volt);
+      rightMiddleDrive.spin(fwd, -motorPower, volt);
     }
     wait(10, msec);
 

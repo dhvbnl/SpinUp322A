@@ -9,3 +9,4 @@ void rightroller(vex::color col, vex::vision::signature sig);
 void indexerauton(int count, int velbefore);
 void skills(vex::color col, vex::vision::signature sig);
 void straightline(double speed, int timedrive);
+void testrollers();

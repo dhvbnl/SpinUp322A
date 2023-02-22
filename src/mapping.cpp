@@ -18,40 +18,49 @@ void testinertial () {
   printf("inertial final %f \n", getInertialHeading());
 
 }
-
-int indexerauton(int count, double velbefore) {
-  // while(flywheelCheck.value(pct) >= 40) { // disc not in place it should be
-  while (flywheel.velocity(pct) >= velbefore) {
-    indexer.spin(fwd, 12, volt);
-    wait(30, msec);
-  }
-  indexer.spin(fwd, -5, volt);
-  wait(30, msec);
-  indexer.spin(fwd, 0, volt);
-  count++;
-  return count;
+void testrollers() {
+  timeDrive(-5, 500);
+  intake.spin(fwd, 12, volt);
+  wait(300, msec);
+  intake.stop();
+  timeDrive(5, 200);
 }
+
+// int indexerauton(int count, double velbefore) {
+//   // while(flywheelCheck.value(pct) >= 40) { // disc not in place it should be
+//   while (flywheel.velocity(pct) >= velbefore) {
+//     indexer.spin(fwd, 12, volt);
+//     wait(30, msec);
+//   }
+//   indexer.spin(fwd, -5, volt);
+//   wait(30, msec);
+//   indexer.spin(fwd, 0, volt);
+//   count++;
+//   return count;
+// }
 
 void indexnew(int count, double velbefore) {
   int i = 0;
   while (i < count) {
     if (flywheel.velocity(pct) >= velbefore - 1 && flywheel.velocity(pct) <= velbefore + 1) {
       printf("flywheel velocity %f \n", flywheel.velocity(pct));
-      indexer.spin(fwd, 100, pct);
-      while(flywheelCheck.value(pct) > 10) { //wait for disk to reach flywheel
+      intake.spin(fwd, -100, pct); // spin indexer
+      while(flywheelCheck.value(pct) > 10) { // wait for disk to reach flywheel
        // printf("waitforflywheel %lo \n", flywheelCheck.value(pct));
         //wait(10, msec);
       }
-      while (flywheelCheck.value(pct) < 10) { //wait for disk to pass flywheel
-       // printf("check %lo \n", flywheelCheck.value(pct));
-        //wait(10, msec);
-      }
+      // while (flywheelCheck.value(pct) < 10) { // wait for disk to pass flywheel
+      //  // printf("check %lo \n", flywheelCheck.value(pct));
+      //   //wait(10, msec);
+      // }
       i++;
+      intake.spin(fwd, 60, pct);
+      wait(100, msec);
+      intake.stop();
     }
-    indexer.spin(fwd, -60, pct);
-    wait(100, msec);
+    
     //printf("count %i \n", i);
-    indexer.stop();
+    intake.stop();
     wait(20, msec);
   } 
 
@@ -120,7 +129,7 @@ void leftroller(color col, signature sig) {
   timeDrive(-4, 400);
   drivetrainTurn(353);
   flywheelmanual(10.7);
-  setindexerClamp();
+  //setindexerClamp();
   wait(3, sec);
   int count = 0;
   while (count < 2 ) {
@@ -128,7 +137,7 @@ void leftroller(color col, signature sig) {
     printf("count %f \n", double(count));
     wait(1200, msec); //2000
   }
-  setindexerClamp();
+  //setindexerClamp();
   drivetrainTurn(235);
   setIntakeSpeed(12);
   printf("inertial %f \n", getInertialHeading());
@@ -143,7 +152,7 @@ void leftroller(color col, signature sig) {
   count = 0;
  // timer t;
   wait(1000, msec);
-  setindexerClamp();
+  //setindexerClamp();
   while (count < 3 ) {
     //count = indexerauton(count, 0);
     printf("count %f \n", double(count));
@@ -194,7 +203,7 @@ void rightroller (color col, signature sig) {
   int count = 0;
  // timer t;
   wait(1000, msec);
-  setindexerClamp();
+  //setindexerClamp();
   while (count < 3 ) {
     //count = indexerauton(count, 0);
     printf("count %f \n", double(count));
