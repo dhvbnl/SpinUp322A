@@ -6,9 +6,9 @@ void opcontrol()
   setDrivetrainCreep();
   //start all control tasks
   thread driveMove(drivetrainControl);
-  // thread intakemove(intakeControl);
-  // thread flywheelmove(flywheelControl);
-  // thread indexermove(indexerControl);
+  thread intakemove(intakeControl);
+  thread flywheelmove(flywheelControl);
+  thread indexermove(indexerControl);
   //thread liftMove(liftControl);
   //thread controllerScreen(screenGUI);
   
