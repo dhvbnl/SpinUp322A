@@ -1,6 +1,6 @@
 
 void testvision(vex::color col, vex::vision::signature sig);
-void testflywheel(vex::color col, vex::vision::signature sig);
+void testflywheel();
 void testarea(vex::color col, vex::vision::signature sig);
 void testinertial();
 void leftroller(vex::color col, vex::vision::signature sig);

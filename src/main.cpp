@@ -70,7 +70,7 @@ Button autonButtons[] = {
 void autonomous(void) {
   if (redSide) {
     switch (autonToRun) {
-    case 0: testrollers();
+    case 0: testvision(red, REDGOAL);
       break;
     case 1:leftroller(red, REDGOAL);
       break;

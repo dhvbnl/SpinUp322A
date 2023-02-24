@@ -1,7 +1,13 @@
 #include "vex.h"
 
 void testvision (color col, signature sig) {
-   findGoal(red, REDGOAL, true);
+  // while (true) {
+  //   int num = v.takeSnapshot(sig);
+  //   printf("object found %f \n", 1.0 * num);
+  //   wait(10, msec);
+  // }
+   findGoal(col, sig, true);
+   testflywheel();
   //setDrivetrainSpeed(-3.5, 3.5);
 }
 void testinertial () {
@@ -45,50 +51,29 @@ void indexnew(int count, double velbefore) {
     if (flywheel.velocity(pct) >= velbefore - 1 && flywheel.velocity(pct) <= velbefore + 1) {
       printf("flywheel velocity %f \n", flywheel.velocity(pct));
       intake.spin(fwd, -100, pct); // spin indexer
-      while(flywheelCheck.value(pct) > 10) { // wait for disk to reach flywheel
-       // printf("waitforflywheel %lo \n", flywheelCheck.value(pct));
-        //wait(10, msec);
+      while(flywheelCheck.value(pct) > 50) { // wait for disk to reach flywheel
+        printf("waitforflywheel %lo \n", flywheelCheck.value(pct));
+        wait(10, msec);
       }
-      // while (flywheelCheck.value(pct) < 10) { // wait for disk to pass flywheel
-      //  // printf("check %lo \n", flywheelCheck.value(pct));
-      //   //wait(10, msec);
-      // }
-      i++;
       intake.spin(fwd, 60, pct);
-      wait(100, msec);
-      intake.stop();
+      while (flywheelCheck.value(pct) < 50) { // wait for disk to pass flywheel
+        printf("check %lo \n", flywheelCheck.value(pct));
+        wait(10, msec);
+      }
+       i++;
     }
-    
-    //printf("count %i \n", i);
+    printf("disk count %i \n", i);
+   // intake.spin(fwd, 60, pct);
     intake.stop();
     wait(20, msec);
   } 
 
 }
 
-void testflywheel (color col, signature sig) {
+void testflywheel () {
+
   printf("enterprogram %f \n", 1.0);
-  //findGoal(col, sig, true);
-  // setIntakeSpeed(12);
-  // wait(6000, msec);
-  // setIntakeSpeed(0);
-  int width = findGoal(col, sig, true);
-  // if (width > 70) {
-  //   flywheelvolt = 8.7;
-  // } else if (width > 55) {
-  //   flywheelvolt = 9;
-  // } else if (width > 45) {
-  //   flywheelvolt = 9.2;
-  // } else {
-  //   flywheelvolt = 11.5;
-  // }
-  //printf("volt %f \n", flywheelvolt);
-  printf("width %i \n", width);
-  //SPEEDS (Velocity pct) | WIDTH | MARKER (front of robot) | # MADE
-  //65 | 52 | 2 | 2
-  // 65 | 48 | 2 |1 
-  // 65 | 
-  double flywheelspin = 66;
+  double flywheelspin = 95;
   flywheelmanual(flywheelspin);
   while(flywheel.velocity(pct) < flywheelspin) {
     wait(20, msec);
@@ -147,7 +132,6 @@ void leftroller(color col, signature sig) {
   drivetrainTurn(310);
   wait(500, msec);
   setIntakeSpeed(0);
-  findGoal(col, sig, true);
   printf("reached %f \n", 0.0);
   count = 0;
  // timer t;

@@ -9,75 +9,8 @@
 //const int yellowBrightness = 12;
 
 //comp
-const int redBrightness = 67;
+const int redBrightness = 39;
 const int blueBrightness = 88;
-//const int yellowBrightness = 25;
-// void findFrontGoal(color col, signature sig, int basespeed, bool right,
-//                    bool check, bool risk) {
-//   if (col == red) {
-//     v.setBrightness(redBrightness);
-//   } else if (col == blue) {
-//     v.setBrightness(blueBrightness);
-//   } else if (col == yellow) {
-//     v.setBrightness(yellowBrightness);
-//   }
-//   v.takeSnapshot(sig);
-//   if (check) {
-//     if (right) {
-//       setDrivetrainSpeed(4.5, -4.5);
-//     } else {
-//       setDrivetrainSpeed(-4.5, 4.5);
-//     }
-//     while (v.objectCount == 0 ||
-//            v.largestObject.height < 10 ||
-//            v.largestObject.width < 20) {
-//       wait(20, msec);
-//       v.takeSnapshot(sig);
-//     }
-//   }
-
-//   vision::object test = v.largestObject;
-//   if (!risk) {
-//     while (test.centerX < centerX - centerTol || test.centerX > centerX + centerTol) {
-//       if (test.centerX < centerX - centerTol) {
-//         setDrivetrainSpeed(-4, 4);
-//       } else if (test.centerX > centerX + centerTol) {
-//         setDrivetrainSpeed(4, -4);
-//       }
-//       wait(20, msec);
-//       v.takeSnapshot(sig);
-//     }
-//   }
-
-//   int leftSpeed = basespeed;
-//   int rightSpeed = basespeed;
-//   while (test.centerY < 140) {
-//     if (test.centerY > 120) {
-//       basespeed = (140 - test.centerY) / 8 + 3;
-//     }
-//     if (test.centerY < 165) {
-//       if (test.centerX < centerX) {
-//         rightSpeed = basespeed;
-//         leftSpeed = basespeed + (test.centerX - centerX) * 0.1;
-//       } else {
-//         leftSpeed = basespeed;
-//         rightSpeed = basespeed - (test.centerX - centerX) * 0.1;
-//       }
-//     } else {
-//       leftSpeed = basespeed;
-//       rightSpeed = basespeed;
-//     }
-//     setDrivetrainSpeed(leftSpeed, rightSpeed);
-//     wait(20, msec);
-//     v.takeSnapshot(sig);
-//   }
-//   // while (frontLineTracker.value(pct) > 60) {
-//   //   setDrivetrainSpeed(3, 3);
-//   //   wait(20, msec);
-//   // }
-//   setDrivetrainSpeed(0, 0);
-// }
-
 
 int findGoal(color col, signature sig, bool right) {
   double area = 0;
@@ -97,36 +30,69 @@ int findGoal(color col, signature sig, bool right) {
     setDrivetrainSpeed(-5.0, 5.0);
     printf("left %f \n", 0.0);
   }
-  // if no objects are detected, turn and check again...
-  while (v.objectCount == 0 ||
-          v.largestObject.height < 10 ||
-          v.largestObject.width < 20) {
+
+  // // if no objects are detected, turn and check again...
+  // while (v.objectCount == 0 ||
+  //         v.largestObject.height < 10 ||
+  //         v.largestObject.width < 20) {
+  //   wait(10, msec);
+  //   v.takeSnapshot(sig);
+  // }
+  
+
+  bool objFound = false;
+  vision::object test;
+  while(!objFound) {
     wait(10, msec);
-    v.takeSnapshot(sig);
+    int num = v.takeSnapshot(sig);
+    if (v.objectCount != 0 && v.largestObject.height > 10 && v.largestObject.width > 10){
+      printf("object found %f \n", 1.0 * num);
+      for (int i = 0; i < num; i++) {
+        vision::object obj = v.objects[i];
+        if (obj.centerY > 40 && obj.centerY < 60) {
+          if ((obj.height > 10 && obj.height < 23) && (obj.width > 35 && obj.width < 55)) {
+            test = obj;
+            objFound = true;
+            break;
+          }
+        }
+      }
+    }
   }
-  printf("object found %f \n", 0.0);
-  vision::object test = v.largestObject;
-  int lowerCenterXBound = 170; //165
-  int upperCenterXBound = 178; //157.5 = exact center
+
+
+  //vision::object test = v.largestObject;
+  int lowerCenterXBound = 165; //165
+  int upperCenterXBound = 180; //157.5 = exact center
 
   double leftspeed; 
   double rightspeed; 
   while (test.centerX < lowerCenterXBound || test.centerX > upperCenterXBound) {
+    for (int i = 0; i < v.takeSnapshot(sig); i++) {
+      vision::object obj = v.objects[i];
+      if (obj.centerY > 40 && obj.centerY < 60) {
+        if ((obj.height > 10 && obj.height < 23) && (obj.width > 35 && obj.width < 55)) {
+          test = obj;
+          objFound = true;
+          break;
+        }
+      }
+    }
     if (test.centerX < lowerCenterXBound) {
-      leftspeed = -2.5;
-      rightspeed = 2.5;
+      leftspeed = 4;
+      rightspeed = -4;
       printf("turn right %f \n", double(test.centerX));
     } 
      else if (test.centerX > upperCenterXBound) {
-      leftspeed = 2.5; 
-      rightspeed = -2.5;
+      leftspeed = -4; 
+      rightspeed = 4;
       printf("turn left %f \n", double(test.centerX));
     } else {
       leftspeed = 0;
       rightspeed = 0;
     }
     setDrivetrainSpeed(leftspeed, rightspeed);
-    wait(100, msec);
+    wait(10, msec);
     v.takeSnapshot(sig);
   }
   
