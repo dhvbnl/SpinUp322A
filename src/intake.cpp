@@ -14,14 +14,16 @@ void intakeControl() {
 void setIntakeSpeed(double speed) {
   if(getIndexerState() == 0){
     intake.spin(fwd, speed, volt);
-    
   }
-  
 }
 
 void setIndexerControl() {
   if (intakeState) {
     setIntakeSpeed(getAxis2Pos() / voltageConverstion);
+  }
+  if(getIndexerState() != 0){
+    intakeState = true;
+    intakeDelay = 0;
   }
   if (getXPos() && intakeDelay > 20) {
     setIntakeSpeed(12);

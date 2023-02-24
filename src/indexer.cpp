@@ -40,12 +40,12 @@ void shootDisc(){
   intake.spin(fwd, -12, volt);
   printf("made it");
   int counter = 0;
-  while(flywheelCheck.value(pct) > 50 || counter < 15){
+  while(flywheelCheck.value(pct) > 50 && counter < 30){
     counter++;
     wait(20, msec);
   }
-  if(counter < 15){
-    wait(200, msec);
+  if(counter < 30){
+    //wait(200, msec);
     shootDisc();
   }
   indexerState--;
