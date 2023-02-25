@@ -49,7 +49,7 @@ void setflywheelSpeed() {
   }
 }
 
-void flywheelmanual(double speed) { flywheel.spin(fwd, speed, pct); }
+void flywheelmanual(double speed) { flywheel.spin(fwd, speed, volt); }
 
 void flywheelAdjust() {
   if (getL1Pos() && flywheelDelay > 20) {

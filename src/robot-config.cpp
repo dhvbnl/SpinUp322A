@@ -39,7 +39,7 @@ vision v = vision (PORT19, 25, REDGOAL, BLUEGOAL);
 
 digital_out angleAdjuster = digital_out(Brain.ThreeWirePort.A);    
 
-digital_out expansion = digital_out(Brain.ThreeWirePort.E);   
+digital_out expansion = digital_out(Brain.ThreeWirePort.B);   
 
 line flywheelCheck = line(Brain.ThreeWirePort.G);
 

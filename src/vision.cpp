@@ -50,7 +50,7 @@ int findGoal(color col, signature sig, bool right) {
       for (int i = 0; i < num; i++) {
         vision::object obj = v.objects[i];
         if (obj.centerY > 40 && obj.centerY < 60) {
-          if ((obj.height > 10 && obj.height < 23) && (obj.width > 35 && obj.width < 55)) {
+          if ((obj.height > 10 && obj.height < 23) && (obj.width > 35 && obj.width < 55)) { //10,23 (height) 35, 55 (width)
             test = obj;
             objFound = true;
             break;
@@ -65,8 +65,8 @@ int findGoal(color col, signature sig, bool right) {
   //wait(5000, msec);
   wait(500, msec);
 
-  int lowerCenterXBound = 155; //165
-  int upperCenterXBound = 170; //157.5 = exact center
+  int lowerCenterXBound = 170; //165
+  int upperCenterXBound = 175; //157.5 = exact center
 
   double leftspeed; 
   double rightspeed; 
