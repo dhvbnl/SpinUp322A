@@ -45,7 +45,7 @@ int findGoal(color col, signature sig, bool right) {
   while(!objFound) {
     wait(10, msec);
     int num = v.takeSnapshot(sig);
-    if (v.objectCount != 0 && v.largestObject.height > 10 && v.largestObject.width > 10){
+    if (v.objectCount != 0 && v.largestObject.height > 10 && v.largestObject.width > 10) {
       printf("object found %f \n", 1.0 * num);
       for (int i = 0; i < num; i++) {
         vision::object obj = v.objects[i];
@@ -60,32 +60,35 @@ int findGoal(color col, signature sig, bool right) {
     }
   }
 
+  setDrivetrainSpeed(0, 0);
+  printf("x coordinate %i \n", test.centerX);
+  //wait(5000, msec);
+  wait(500, msec);
 
-  //vision::object test = v.largestObject;
-  int lowerCenterXBound = 165; //165
-  int upperCenterXBound = 180; //157.5 = exact center
+  int lowerCenterXBound = 155; //165
+  int upperCenterXBound = 170; //157.5 = exact center
 
   double leftspeed; 
   double rightspeed; 
   while (test.centerX < lowerCenterXBound || test.centerX > upperCenterXBound) {
-    for (int i = 0; i < v.takeSnapshot(sig); i++) {
-      vision::object obj = v.objects[i];
-      if (obj.centerY > 40 && obj.centerY < 60) {
-        if ((obj.height > 10 && obj.height < 23) && (obj.width > 35 && obj.width < 55)) {
-          test = obj;
-          objFound = true;
-          break;
-        }
-      }
-    }
+    // for (int i = 0; i < v.takeSnapshot(sig); i++) {
+    //   vision::object obj = v.objects[i];
+    //   if (obj.centerY > 40 && obj.centerY < 60) {
+    //     //if ((obj.height > 10 && obj.height < 23) && (obj.width > 35 && obj.width < 55)) {
+    //       test = obj;
+    //       break;
+    //   }
+    // }
+    v.takeSnapshot(sig);
+    test = v.largestObject;
     if (test.centerX < lowerCenterXBound) {
-      leftspeed = 4;
-      rightspeed = -4;
+      leftspeed = 2.5;
+      rightspeed = -2.5;
       printf("turn right %f \n", double(test.centerX));
     } 
      else if (test.centerX > upperCenterXBound) {
-      leftspeed = -4; 
-      rightspeed = 4;
+      leftspeed = -2.5; 
+      rightspeed = 2.5;
       printf("turn left %f \n", double(test.centerX));
     } else {
       leftspeed = 0;
@@ -93,7 +96,7 @@ int findGoal(color col, signature sig, bool right) {
     }
     setDrivetrainSpeed(leftspeed, rightspeed);
     wait(10, msec);
-    v.takeSnapshot(sig);
+    //v.takeSnapshot(sig);
   }
   
   setDrivetrainSpeed (0, 0);

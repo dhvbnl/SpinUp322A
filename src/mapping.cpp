@@ -6,7 +6,7 @@ void testvision (color col, signature sig) {
   //   printf("object found %f \n", 1.0 * num);
   //   wait(10, msec);
   // }
-   findGoal(col, sig, true);
+   findGoal(col, sig, false);
    testflywheel();
   //setDrivetrainSpeed(-3.5, 3.5);
 }
@@ -49,20 +49,20 @@ void indexnew(int count, double velbefore) {
   int i = 0;
   while (i < count) {
     if (flywheel.velocity(pct) >= velbefore - 1 && flywheel.velocity(pct) <= velbefore + 1) {
-      printf("flywheel velocity %f \n", flywheel.velocity(pct));
+     // printf("flywheel velocity %f \n", flywheel.velocity(pct));
       intake.spin(fwd, -100, pct); // spin indexer
       while(flywheelCheck.value(pct) > 50) { // wait for disk to reach flywheel
-        printf("waitforflywheel %lo \n", flywheelCheck.value(pct));
+      //  printf("waitforflywheel %lo \n", flywheelCheck.value(pct));
         wait(10, msec);
       }
       intake.spin(fwd, 60, pct);
       while (flywheelCheck.value(pct) < 50) { // wait for disk to pass flywheel
-        printf("check %lo \n", flywheelCheck.value(pct));
+      //  printf("check %lo \n", flywheelCheck.value(pct));
         wait(10, msec);
       }
        i++;
     }
-    printf("disk count %i \n", i);
+    //printf("disk count %i \n", i);
    // intake.spin(fwd, 60, pct);
     intake.stop();
     wait(20, msec);
@@ -72,13 +72,13 @@ void indexnew(int count, double velbefore) {
 
 void testflywheel () {
 
-  printf("enterprogram %f \n", 1.0);
+  //printf("enterprogram %f \n", 1.0);
   double flywheelspin = 95;
   flywheelmanual(flywheelspin);
   while(flywheel.velocity(pct) < flywheelspin) {
     wait(20, msec);
   }
-  printf("flywheel velocity before %f \n", flywheel.velocity(pct));
+  //printf("flywheel velocity before %f \n", flywheel.velocity(pct));
   indexnew(3, flywheelspin);
   flywheelmanual(0);
 
