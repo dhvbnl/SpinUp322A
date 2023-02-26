@@ -70,11 +70,11 @@ Button autonButtons[] = {
 void autonomous(void) {
   if (redSide) {
     switch (autonToRun) {
-    case 0:rightroller(red, REDGOAL);
+    case 0: rightroller(red, REDGOAL);
       break;
-    case 1:leftroller(red, REDGOAL, 100);
+    case 1:leftroller(red, REDGOAL, 200);
       break;
-    case 2: bothrollers(red, REDGOAL, 100);
+    case 2: bothrollers(red, REDGOAL, 200);
       break;
     case 3: skills(red, REDGOAL);
       break;
@@ -91,9 +91,9 @@ void autonomous(void) {
     switch (autonToRun) {
     case 0: rightroller(blue, BLUEGOAL);
       break;
-    case 1: leftroller(blue, BLUEGOAL, 100);
+    case 1: leftroller(blue, BLUEGOAL, 200);
       break;
-    case 2: bothrollers(blue, BLUEGOAL, 100);
+    case 2: bothrollers(blue, BLUEGOAL, 200);
       break;
     case 3: skills(blue, BLUEGOAL);
       break;

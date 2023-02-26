@@ -9,7 +9,7 @@ brain Brain;
 controller Controller = controller(primary);
 
 /* ENTER CORRECT PORTS FOR MOTORS*/
-motor leftFrontDrive = motor(PORT5, ratio6_1, true);
+motor leftFrontDrive = motor(PORT6, ratio6_1, true);
 motor leftBackDrive = motor(PORT14, ratio6_1, true);
 motor leftMiddleDrive = motor(PORT15, ratio6_1, false); 
 
@@ -33,8 +33,8 @@ inertial inert = inertial(PORT17);
 // signature REDGOAL = signature (2, 9545, 10547, 10046, -2979, 625, -1177, 10.700, 0);
 
 
-signature BLUEGOAL (1, -3349, -1639, -2494, 8133, 13063, 10598, 3.300, 0);
-signature REDGOAL (2, 5417, 6553, 5985, 585, 1695, 1140, 5.100, 0);
+signature BLUEGOAL (1, -1057, 601, -228, 6731, 7761, 7246, 6.200, 0);
+signature REDGOAL (2, 8437, 9919, 9178, -1807, -245, -1026, 4.000, 0);
 vision v = vision (PORT19, 25, REDGOAL, BLUEGOAL); 
 
 digital_out angleAdjuster = digital_out(Brain.ThreeWirePort.A);    

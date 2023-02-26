@@ -9,8 +9,8 @@
 //const int yellowBrightness = 12;
 
 //comp
-const int redBrightness = 39;
-const int blueBrightness = 88;
+const int redBrightness = 42;
+const int blueBrightness = 100;
 
 int findGoal(color col, signature sig, bool right) {
   double area = 0;
@@ -50,7 +50,7 @@ int findGoal(color col, signature sig, bool right) {
       for (int i = 0; i < num; i++) {
         vision::object obj = v.objects[i];
         if (obj.centerY > 40 && obj.centerY < 60) {
-          if ((obj.height > 10 && obj.height < 23) && (obj.width > 35 && obj.width < 55)) { //10,23 (height) 35, 55 (width)
+          if ((obj.height > 10 && obj.height < 23) && (obj.width > 35 && obj.width < 60)) { //10,23 (height) 35, 55 (width)
             test = obj;
             objFound = true;
             break;

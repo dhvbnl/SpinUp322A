@@ -75,12 +75,10 @@ void testflywheel (int flywheelspeed, int disks) {
   //printf("enterprogram %f \n", 1.0);
   //double flywheelspeed = 90;
   flywheelmanual(flywheelspeed);
-  while(flywheel.velocity(pct) < flywheelspeed) {
-    printf("flywheel speed %f \n", flywheel.velocity(pct));
-    wait(20, msec);
-  }  
+ // wait(2000, msec);
+  int flywheelvel = flywheel.velocity(pct);
   //printf("flywheel velocity before %f \n", flywheel.velocity(pct));
-  indexnew(disks, flywheelspeed);
+  indexnew(disks, flywheelvel);
   flywheelmanual(0);
 
     
@@ -108,23 +106,25 @@ void testarea(color col, signature sig) {
 }
 
 void leftroller(color col, signature sig, int roller) {
-  int flywheelspeed = 90;
+  int flywheelspeed = 12;
+  flywheelmanual(flywheelspeed);
   timeDrive(-4, 500); //rolls rollers
   setIntakeSpeed(12);
   wait(roller, msec); // 100 match, 200 skills 
   setIntakeSpeed(0);
   timeDrive(4, 400);
   drivetrainTurn(48); //turn to three disk stack
- 
   printf("inertial %f \n", getInertialHeading());
-  timeDrive(5, 2500);
+  timeDrive(5, 2300);
   wait(200, msec);
-  flywheelmanual(flywheelspeed);
   timeDrive(-4, 500);
-  findGoal(col, sig, true);
+  drivetrainTurn(333);
+  printf("inertial %f \n", getInertialHeading());
   timeDrive(3, 500);
   testflywheel(flywheelspeed, 2);
   printf("reached %f \n", 0.0);
+  drivetrainTurn(44);
+  timeDrive(-4, 2500);
 
 
 }
@@ -134,23 +134,23 @@ void bothrollers (color col, signature sig, int roller) {
   leftroller(col, sig, roller);
   wait(200, msec);
   drivetrainTurn(226);
-  timeDrive(-6, 2600);
+  timeDrive(-6, 2900);
   wait(100, msec);
   drivetrainTurn(270);
-  timeDrive(-4, 500);
-  timeDrive(2, 200);
+  timeDrive(-4, 1000);
+  timeDrive(2, 300);
   setIntakeSpeed(12);
   wait(roller, msec);
   setIntakeSpeed(0);
-  timeDrive(3, 300);
+ // timeDrive(3, 300);
 
 }
 
 void rightroller (color col, signature sig) {
-  int flywheelspeed = 95;
+  int flywheelspeed = 12;
   timeDrive(-6, 600);
   drivetrainTurn(90);
-  timeDrive(-6, 300);
+  timeDrive(-6, 500);
   setIntakeSpeed(12);
   wait(100, msec);
   setIntakeSpeed(0);
@@ -169,15 +169,17 @@ void rightroller (color col, signature sig) {
 
 void skills (color col, signature sig) {
   bothrollers(col, sig, 400);
-  timeDrive(3, 500);
+  timeDrive(3, 800);
   drivetrainTurn(180);
-  timeDrive(-4, 1800);
-  timeDrive(2, 200);
+  timeDrive(-4, 1500);
+  timeDrive(2, 300);
   setIntakeSpeed(12);
   wait(400, msec);
   setIntakeSpeed(0);
   timeDrive(4, 700);
   drivetrainTurn(226);
+  expansion.set(false);
+  wait(3, sec);
   expansion.set(true);
 
 }
