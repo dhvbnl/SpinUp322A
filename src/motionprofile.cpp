@@ -25,7 +25,7 @@ int move(double speed, bool fwd) {
   return 0;
 }
 //accelerate
-int accelerate() {
+/*int accelerate() {
   //robot current position
   double lorig = getVerticalEncoderRotation() * convertInches;
   //if the robot is going forwards
@@ -60,9 +60,24 @@ int accelerate() {
     }
   }
   return 0;
+}*/
+void accelerate (motor m) {
+  double M = acc.maxspeed; 
+  double t = 9;
+  double k = 0.8;
+  double x = m.rotation(deg) * convertInches; 
+
+
+
+  //      1/(1+te^(-kx) 
+  //logistic growth curve ("s" curve) 
+  while (x < 8) {
+    double speed = M / (1 + t * exp(-k * x)); // x = position 
+    m.spin(fwd, speed, pct);
+  }
 }
 //decelerate
-int decelerate() {
+/*int decelerate() {
   //robot current position (in inches)
   double lorig = getVerticalEncoderRotation() * convertInches;
   int n = 0;
@@ -76,11 +91,8 @@ int decelerate() {
     //robot current position added to distance it needs to decelerate
     acc.dist += lorig;
     while ((getVerticalEncoderRotation() * convertInches) < acc.dist) {
-     // speed = 1.1 * exp((-0.4 * fabs((fabs(getVerticalEncoderRotation()) * convertInches) - lorig + n)) + 2) + 1.15;
       speed = -3.8 * log(fabs((fabs(getVerticalEncoderRotation()) * convertInches) - lorig + n)) + 11.7;
         if (speed > acc.maxspeed) speed = acc.maxspeed;
-        //if (speed < 1) speed = 1;
-        //if (speed < 3) speed = 3;
         wait(10, msec);
     }
   //if the robot is going backwards
@@ -94,8 +106,6 @@ int decelerate() {
     acc.dist = lorig - acc.dist;
     int changeindist = 0;
     while ((getVerticalEncoderRotation() * convertInches) > acc.dist) {
-      //speed = 1.5 * exp((-0.25 * fabs((fabs(getVerticalEncoderRotation()) * convertInches) - lorig + n)) + 2) + -.5; 
-      //speed = -3.8 * log(fabs((fabs(getVerticalEncoderRotation()) * convertInches) - lorig + n)) + 10;
       if (acc.dist < 14) {
         changeindist = lorig - (getVerticalEncoderRotation() * convertInches) + n;
       } else {
@@ -104,19 +114,49 @@ int decelerate() {
         
         
         speed = -3.8 *log(changeindist) + 10.5;
-       // printf("change in distance %i \n", changeindist);
-        //printf("speed %f \n", speed);
         if (speed > acc.maxspeed) speed = acc.maxspeed;
         //if (speed < 2.5) speed = 1.5;
         wait(10, msec);
     }
   }
   return 0;
+}*/
+
+double decelerate (){
+  double M = acc.maxspeed; 
+  double k; 
+  double x; 
+
+  if (M < 5) {
+    k = 2;
+  } else if (M < 9) {
+    k = 1; 
+  } else {
+    k = 0.5; 
+  }
+  //  logistic growth curve ("s" curve)
+  // M < 5; k = 2; x = 4
+  // M < 9; k = 1; x = 8
+  // M <= 12; k = 0.5; x = 13
+  double speed = (M / (1 + 0.01 * exp (k * x))) * 100 / 12 ;
+
+  return speed; 
 }
 
+void driveProfile(int dist, double maxspeed, bool fwd) { 
+  acc.dist = dist; 
+  acc.maxspeed = maxspeed; 
 
 
-int driveProfile(int dist, double maxspeed, bool fwd) { //encoder orientation flipped
+
+  
+
+
+  
+  
+}
+
+/*int driveProfile(int dist, double maxspeed, bool fwd) { //encoder orientation flipped
   //Inertial.resetRotation();
   acc.dist = 0;
   double acceldist = 0;
@@ -215,6 +255,6 @@ int driveProfile(int dist, double maxspeed, bool fwd) { //encoder orientation fl
   wait(100, msec);
   //printf("done with motion profile");
   return 0;
-}
+}*/
 
 

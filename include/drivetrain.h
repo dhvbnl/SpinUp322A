@@ -57,3 +57,4 @@ void drivetrainTurn(double targetdeg);
 
 //std::string tempInfoDrive();
 
+void arcturn (double left, double right, double turnangle);

@@ -15,10 +15,10 @@ void testinertial () {
     wait(100, msec);
   }
   printf("inertial before %f \n", getInertialHeading());
-  drivetrainTurn(120);
+  drivetrainTurn(90);
   wait(200, msec);
   printf("inertial after %f \n", getInertialHeading());
-  setDrivetrainSpeed(3, 3);
+  //setDrivetrainSpeed(3, 3);
   wait(500, msec);
   setDrivetrainSpeed(0, 0);
   printf("inertial final %f \n", getInertialHeading());
@@ -74,10 +74,8 @@ void testflywheel (int flywheelspeed, int disks) {
 
   //printf("enterprogram %f \n", 1.0);
   //double flywheelspeed = 90;
-  flywheelmanual(flywheelspeed);
- // wait(2000, msec);
   int flywheelvel = flywheel.velocity(pct);
-  //printf("flywheel velocity before %f \n", flywheel.velocity(pct));
+  printf("flywheel velocity before %f \n", flywheel.velocity(pct));
   indexnew(disks, flywheelvel);
   flywheelmanual(0);
 
@@ -105,33 +103,39 @@ void testarea(color col, signature sig) {
   }
 }
 
-void leftroller(color col, signature sig, int roller) {
-  int flywheelspeed = 12;
+void leftroller(int roller) {
+  setDrivetrainLock();
+   int flywheelspeed = 12;
   flywheelmanual(flywheelspeed);
   timeDrive(-4, 500); //rolls rollers
   setIntakeSpeed(12);
-  wait(roller, msec); // 100 match, 200 skills 
+  wait(roller, msec); // 200 match, 400 skills 
   setIntakeSpeed(0);
   timeDrive(4, 400);
-  drivetrainTurn(48); //turn to three disk stack
+  arcturn(5, 0, 60);
+  arcturn(0, 5, 350);
   printf("inertial %f \n", getInertialHeading());
-  timeDrive(5, 2300);
-  wait(200, msec);
-  timeDrive(-4, 500);
-  drivetrainTurn(333);
-  printf("inertial %f \n", getInertialHeading());
-  timeDrive(3, 500);
+  
   testflywheel(flywheelspeed, 2);
-  printf("reached %f \n", 0.0);
-  drivetrainTurn(44);
-  timeDrive(-4, 2500);
+  // drivetrainTurn(48); //turn to three disk stack
+  // printf("inertial %f \n", getInertialHeading());
+  // timeDrive(5, 2300);
+  // wait(200, msec);
+  // timeDrive(-4, 500);
+  // drivetrainTurn(333);
+  // printf("inertial %f \n", getInertialHeading());
+  // timeDrive(3, 500);
+  // testflywheel(flywheelspeed, 2);
+  // printf("reached %f \n", 0.0);
+  // drivetrainTurn(44);
+  // timeDrive(-4, 2500);
 
 
 }
 
 void bothrollers (color col, signature sig, int roller) {
 
-  leftroller(col, sig, roller);
+  leftroller( roller);
   wait(200, msec);
   drivetrainTurn(226);
   timeDrive(-6, 2900);
