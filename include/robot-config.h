@@ -38,6 +38,7 @@ extern digital_out angleAdjuster;
 extern digital_out expansion;
 
 extern line flywheelCheck;
+extern line intakeCheck;
 extern line indexerTop;
 
 

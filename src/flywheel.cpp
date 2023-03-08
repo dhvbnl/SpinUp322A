@@ -16,9 +16,6 @@ void flywheelControl() {
 }
 
 void setflywheelSpeed() {
-  Controller.Screen.clearScreen();
-  Controller.Screen.setCursor(0, 0);
-  Controller.Screen.print(flywheel.velocity(pct));
   if (!flywheelOverride) {
     //
   } else {

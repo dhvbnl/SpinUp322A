@@ -9,13 +9,13 @@ brain Brain;
 controller Controller = controller(primary);
 
 /* ENTER CORRECT PORTS FOR MOTORS*/
-motor leftFrontDrive = motor(PORT6, ratio6_1, true);
-motor leftBackDrive = motor(PORT14, ratio6_1, true);
-motor leftMiddleDrive = motor(PORT15, ratio6_1, false); 
+motor leftFrontDrive = motor(PORT13, ratio6_1, true);
+motor leftBackDrive = motor(PORT11, ratio6_1, true);
+motor leftMiddleDrive = motor(PORT12, ratio6_1, false); 
 
-motor rightFrontDrive = motor(PORT9, ratio6_1, false);
-motor rightBackDrive = motor(PORT16, ratio6_1, false);
-motor rightMiddleDrive = motor(PORT10, ratio6_1, true);
+motor rightFrontDrive = motor(PORT18, ratio6_1, false);
+motor rightBackDrive = motor(PORT20, ratio6_1, false);
+motor rightMiddleDrive = motor(PORT19, ratio6_1, true);
 
 motor flywheel = motor(PORT2, ratio6_1, false);
 
@@ -24,9 +24,9 @@ motor flywheel = motor(PORT2, ratio6_1, false);
 // motor leftIntake = motor(PORT2, ratio6_1, true);
 // motor rightIntake = motor(PORT10, ratio6_1, false);
 
-motor intake = motor(PORT20, ratio6_1, false);
+motor intake = motor(PORT21, ratio6_1, false);
 
-inertial inert = inertial(PORT17);
+inertial inert = inertial(PORT1);
 
 //signature BLUEGOAL = signature (1, -4829, -683, -2756, 7021, 15639, 11330, 1.600, 0);
 // signature BLUEGOAL = signature (1, -4097, -929, -2513, 7637, 11285, 9461, 3.800, 0);
@@ -35,17 +35,18 @@ inertial inert = inertial(PORT17);
 
 signature BLUEGOAL (1, -1057, 601, -228, 6731, 7761, 7246, 6.200, 0);
 signature REDGOAL (2, 8437, 9919, 9178, -1807, -245, -1026, 4.000, 0);
-vision v = vision (PORT19, 25, REDGOAL, BLUEGOAL); 
+vision v = vision (PORT10, 25, REDGOAL, BLUEGOAL); 
 
-digital_out angleAdjuster = digital_out(Brain.ThreeWirePort.A);    
+digital_out angleAdjuster = digital_out(Brain.ThreeWirePort.B);    
 
-digital_out expansion = digital_out(Brain.ThreeWirePort.B);   
+digital_out expansion = digital_out(Brain.ThreeWirePort.C);   
 
-line flywheelCheck = line(Brain.ThreeWirePort.D);
+line flywheelCheck = line(Brain.ThreeWirePort.A);
+line intakeCheck = line(Brain.ThreeWirePort.D);
+line indexerTop = line(Brain.ThreeWirePort.E);
 
-
-triport bottomExpander = triport(PORT13);
-triport topExander = triport(PORT7);
+//triport bottomExpander = triport(PORT13);
+//triport topExander = triport(PORT7);
 
 //encoder verticalTracker = encoder(Expander.A);
 //encoder horizontalTracker = encoder(Expander.E);
