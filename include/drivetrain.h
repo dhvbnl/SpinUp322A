@@ -54,7 +54,7 @@ void timeDrive(double speed, int timeLength);
 void arcturn (double left, double right, double turnangle);
 void arcturnTime (double left, double right, int length);
 void drivetrainTurn(double targetdeg);
-
+void arcturn2 (double left, double right, double turnangle);
 //std::string tempInfoDrive();
 
 void arcturn (double left, double right, double turnangle);

@@ -53,7 +53,7 @@ void indexnew(int count, double velbefore) {
       intake.spin(fwd, -100, pct); // spin indexer
       while(flywheelCheck.value(pct) > 50) { // wait for disk to reach flywheel
       //  printf("waitforflywheel %lo \n", flywheelCheck.value(pct));
-        wait(10, msec);
+       // wait(2, msec);
       }
       intake.spin(fwd, 60, pct);
       while (flywheelCheck.value(pct) < 50) { // wait for disk to pass flywheel
@@ -61,6 +61,7 @@ void indexnew(int count, double velbefore) {
         wait(10, msec);
       }
        i++;
+       printf("disk count %i \n", i);
     }
     //printf("disk count %i \n", i);
    // intake.spin(fwd, 60, pct);
@@ -77,7 +78,7 @@ void testflywheel (int flywheelspeed, int disks) {
   int flywheelvel = flywheel.velocity(pct);
   printf("flywheel velocity before %f \n", flywheel.velocity(pct));
   indexnew(disks, flywheelvel);
-  flywheelmanual(0);
+  //flywheelmanual(0);
 
     
   //flywheelmanual(12);
@@ -112,15 +113,24 @@ void leftroller(int roller) {
   wait(roller, msec); // 200 match, 400 skills 
   setIntakeSpeed(0);
   timeDrive(4, 400);
-  arcturn(5, 0, 60);
-  arcturn(0, 5, 350);
+  arcturn(7, 0, 60); //5 0 60
+  arcturn2(-2.5, 6, 357); //-2.5 5 352
   printf("inertial %f \n", getInertialHeading());
-  
+  wait(1000, msec);
   testflywheel(flywheelspeed, 2);
-  // drivetrainTurn(48); //turn to three disk stack
-  // printf("inertial %f \n", getInertialHeading());
-  // timeDrive(5, 2300);
-  // wait(200, msec);
+  wait(100, msec);
+//   timeDrive(-5, 600);
+  drivetrainTurn(53);
+  printf("inertial %f \n", getInertialHeading());
+   //turn to three disk stack
+ // setIntakeSpeed(12);
+  timeDrive(4, 400);
+  //wait(100, msec);
+  setIntakeSpeed(12);
+  timeDrive(4, 1500);
+  wait(300, msec);
+  arcturn(0, 5, 315);
+  testflywheel(flywheelspeed, 3);
   // timeDrive(-4, 500);
   // drivetrainTurn(333);
   // printf("inertial %f \n", getInertialHeading());

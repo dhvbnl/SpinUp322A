@@ -235,6 +235,31 @@ void arcturn (double left, double right, double turnangle) {
   rightBackDrive.stop();
   printf("arcturn done %f \n", 0.0);
 }
+void arcturn2 (double left, double right, double turnangle) {
+  while (getInertialHeading() < turnangle - 2 || getInertialHeading() > turnangle + 2) {
+    leftFrontDrive.spin(fwd, left, volt);
+    leftMiddleDrive.spin(fwd, left, volt);
+    leftBackDrive.spin(fwd, left, volt);
+    rightFrontDrive.spin(fwd, right, volt);
+    rightMiddleDrive.spin(fwd, right, volt);
+    rightBackDrive.spin(fwd, right, volt);
+    wait(10, msec);
+  }
+    leftFrontDrive.spin(fwd, 4, volt);
+    leftMiddleDrive.spin(fwd, 4, volt);
+    leftBackDrive.spin(fwd, 4, volt);
+    rightFrontDrive.spin(fwd, 4, volt);
+    rightMiddleDrive.spin(fwd, 4, volt);
+    rightBackDrive.spin(fwd, 4, volt);
+    wait(100, msec);
+  leftFrontDrive.stop();
+  rightFrontDrive.stop();
+  leftMiddleDrive.stop();
+  rightMiddleDrive.stop();
+  leftBackDrive.stop();
+  rightBackDrive.stop();
+  printf("arcturn done %f \n", 0.0);
+}
 
 /*void arcturnTime (double left, double right, int length) {
   leftFrontDrive.spin(fwd, left, volt);
@@ -250,9 +275,9 @@ void arcturn (double left, double right, double turnangle) {
 
 void drivetrainTurn(double targetdeg) {
 
-  double kP = .9; //.9
-  double kI = 0.0001;
-  double kD = .35; //.25
+  double kP = 1.3; //.9
+  double kI = 0.0000;
+  double kD = .25; //.25
   //targetdeg -= 3;
 
   // PID loop variables
@@ -269,18 +294,18 @@ void drivetrainTurn(double targetdeg) {
   int x = 0;
   double right = targetdeg - getInertialHeading();
   double left = fabs(targetdeg - getInertialHeading());
-  if (targetdeg < getInertialHeading()) {
-    right = 360 - getInertialHeading() + targetdeg;
-  }
+  // if (targetdeg < getInertialHeading()) {
+  //   right = 360 - getInertialHeading() + targetdeg;
+  // }
 
-  if (targetdeg > getInertialHeading()) {
-    left = 360 + getInertialHeading() - targetdeg;
-  }
-  if (right < left) {
-    targetdeg -= 3;
-  } else {
-    targetdeg +=3;
-  }
+  // if (targetdeg > getInertialHeading()) {
+  //   left = 360 + getInertialHeading() - targetdeg;
+  // }
+  // if (right < left) {
+  //   targetdeg -= 3;
+  // } else {
+  //   targetdeg +=3;
+  // }
   while (fabs(targetdeg - getInertialHeading()) > 1) {
     // PID loop to determine motorPower at any given point in time
     x++;

@@ -41,7 +41,7 @@ digital_out angleAdjuster = digital_out(Brain.ThreeWirePort.A);
 
 digital_out expansion = digital_out(Brain.ThreeWirePort.B);   
 
-line flywheelCheck = line(Brain.ThreeWirePort.G);
+line flywheelCheck = line(Brain.ThreeWirePort.D);
 
 
 triport bottomExpander = triport(PORT13);
