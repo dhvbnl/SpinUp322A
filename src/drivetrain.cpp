@@ -225,7 +225,7 @@ void arcturn (double left, double right, double turnangle) {
     rightFrontDrive.spin(fwd, right, volt);
     rightMiddleDrive.spin(fwd, right, volt);
     rightBackDrive.spin(fwd, right, volt);
-    wait(10, msec);
+    wait(5, msec);
   }
   leftFrontDrive.stop();
   rightFrontDrive.stop();
@@ -243,15 +243,15 @@ void arcturn2 (double left, double right, double turnangle) {
     rightFrontDrive.spin(fwd, right, volt);
     rightMiddleDrive.spin(fwd, right, volt);
     rightBackDrive.spin(fwd, right, volt);
-    wait(10, msec);
+    wait(5, msec);
   }
-    leftFrontDrive.spin(fwd, 4, volt);
-    leftMiddleDrive.spin(fwd, 4, volt);
-    leftBackDrive.spin(fwd, 4, volt);
-    rightFrontDrive.spin(fwd, 4, volt);
-    rightMiddleDrive.spin(fwd, 4, volt);
-    rightBackDrive.spin(fwd, 4, volt);
-    wait(100, msec);
+    // leftFrontDrive.spin(fwd, 4, volt);
+    // leftMiddleDrive.spin(fwd, 4, volt);
+    // leftBackDrive.spin(fwd, 4, volt);
+    // rightFrontDrive.spin(fwd, 4, volt);
+    // rightMiddleDrive.spin(fwd, 4, volt);
+    // rightBackDrive.spin(fwd, 4, volt);
+    // wait(100, msec);
   leftFrontDrive.stop();
   rightFrontDrive.stop();
   leftMiddleDrive.stop();

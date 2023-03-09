@@ -17,7 +17,7 @@ void preauton() {
   setDrivetrainCreep();
 
   //calibrate inertial sensor
-  calibrateInertial();
+  inert.calibrate();
   while(inert.isCalibrating()) {
     wait(100, msec);
   }

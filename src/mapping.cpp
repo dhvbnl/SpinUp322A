@@ -113,23 +113,26 @@ void leftroller(int roller) {
   wait(roller, msec); // 200 match, 400 skills 
   setIntakeSpeed(0);
   timeDrive(4, 400);
-  arcturn(7, 0, 60); //5 0 60
-  arcturn2(-2.5, 6, 357); //-2.5 5 352
+  arcturn(5, 0, 60); //5 0 60
+  arcturn2(-2.5, 5, 352); //-2.5 5 352
   printf("inertial %f \n", getInertialHeading());
-  wait(1000, msec);
+  wait(1200, msec);
   testflywheel(flywheelspeed, 2);
   wait(100, msec);
 //   timeDrive(-5, 600);
-  drivetrainTurn(53);
+  drivetrainTurn(54);
   printf("inertial %f \n", getInertialHeading());
    //turn to three disk stack
  // setIntakeSpeed(12);
-  timeDrive(4, 400);
+// timeDrive(3, 400);
   //wait(100, msec);
+  flywheelmanual(11.6);
   setIntakeSpeed(12);
-  timeDrive(4, 1500);
+  timeDrive(3, 2000);
   wait(300, msec);
-  arcturn(0, 5, 315);
+  arcturn(0, 5, 327);
+  wait(500, msec);
+  printf("inertial %f \n", getInertialHeading());
   testflywheel(flywheelspeed, 3);
   // timeDrive(-4, 500);
   // drivetrainTurn(333);
@@ -160,23 +163,25 @@ void bothrollers (color col, signature sig, int roller) {
 
 }
 
-void rightroller (color col, signature sig) {
+void rightroller () {
   int flywheelspeed = 12;
+  flywheelmanual(12);
   timeDrive(-6, 600);
   drivetrainTurn(90);
   timeDrive(-6, 500);
   setIntakeSpeed(12);
-  wait(100, msec);
-  setIntakeSpeed(0);
-  timeDrive(3, 300);
-  drivetrainTurn(220);
-  timeDrive(-5, 2500);
   wait(200, msec);
-  flywheelmanual(flywheelspeed);
-  timeDrive(3, 300);
-  drivetrainTurn(160);
-  findGoal(col, sig, false);
+  setIntakeSpeed(0);
+  timeDrive(3, 900);
+  drivetrainTurn(98);
+  wait(3000, msec);
   testflywheel(flywheelspeed, 2);
+  setIntakeSpeed(12);
+  drivetrainTurn(43);
+  timeDrive(5, 2500);
+  drivetrainTurn(135);
+  timeDrive(5, 500);
+  testflywheel(flywheelspeed, 3);
   // printf("reached %f \n", 0.0);
   
 }

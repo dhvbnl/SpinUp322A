@@ -17,7 +17,7 @@ motor rightFrontDrive = motor(PORT18, ratio6_1, false);
 motor rightBackDrive = motor(PORT20, ratio6_1, false);
 motor rightMiddleDrive = motor(PORT19, ratio6_1, true);
 
-motor flywheel = motor(PORT2, ratio6_1, false);
+motor flywheel = motor(PORT6, ratio6_1, false);
 
 // motor indexer = motor(PORT18, ratio18_1, true);
 
@@ -26,7 +26,7 @@ motor flywheel = motor(PORT2, ratio6_1, false);
 
 motor intake = motor(PORT21, ratio6_1, false);
 
-inertial inert = inertial(PORT1);
+inertial inert = inertial(PORT2);
 
 //signature BLUEGOAL = signature (1, -4829, -683, -2756, 7021, 15639, 11330, 1.600, 0);
 // signature BLUEGOAL = signature (1, -4097, -929, -2513, 7637, 11285, 9461, 3.800, 0);
