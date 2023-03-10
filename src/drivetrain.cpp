@@ -379,6 +379,7 @@ void drivetrainTurn(double targetdeg) {
   rightFrontDrive.stop();
   rightBackDrive.stop();
   leftBackDrive.stop();
+  printf("PID Turn %f \n", getInertialHeading());
   
 }
 

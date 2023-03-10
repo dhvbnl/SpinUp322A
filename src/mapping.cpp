@@ -53,7 +53,7 @@ void indexnew(int count, double velbefore) {
       intake.spin(fwd, -100, pct); // spin indexer
       while(flywheelCheck.value(pct) > 50) { // wait for disk to reach flywheel
       //  printf("waitforflywheel %lo \n", flywheelCheck.value(pct));
-       // wait(2, msec);
+       wait(10, msec);
       }
       intake.spin(fwd, 60, pct);
       while (flywheelCheck.value(pct) < 50) { // wait for disk to pass flywheel
@@ -186,20 +186,66 @@ void rightroller () {
   
 }
 
-void skills (color col, signature sig) {
-  bothrollers(col, sig, 400);
-  timeDrive(3, 800);
-  drivetrainTurn(180);
-  timeDrive(-4, 1500);
-  timeDrive(2, 300);
+void skills () {
+  // bothrollers(col, sig, 400);
+  // timeDrive(3, 800);
+  // drivetrainTurn(180);
+  // timeDrive(-4, 1500);
+  // timeDrive(2, 300);
+  // setIntakeSpeed(12);
+  // wait(400, msec);
+  // setIntakeSpeed(0);
+  // timeDrive(4, 700);
+  // drivetrainTurn(226);
+  // expansion.set(false);
+  // wait(3, sec);
+  // expansion.set(true);
+  setDrivetrainLock();
+ // flywheelmanual(12);
+  timeDrive(-4, 500); //rolls rollers
   setIntakeSpeed(12);
-  wait(400, msec);
+  wait(400, msec); // 200 match, 400 skills 
   setIntakeSpeed(0);
-  timeDrive(4, 700);
-  drivetrainTurn(226);
-  expansion.set(false);
-  wait(3, sec);
-  expansion.set(true);
+  timeDrive(4, 400);
+  drivetrainTurn(85);
+  wait(2000, msec);
+  //wait(3000, msec);
+  //testflywheel(10, 2);
+  setIntakeSpeed(12);
+  drivetrainTurn(5);
+  timeDrive(3, 1600);
+  wait(100, msec);
+  drivetrainTurn(72);
+  timeDrive(-4, 1800);
+  //wait(100, msec);
+ // setIntakeSpeed(0);
+  timeDrive(4, 600);
+  drivetrainTurn(7);
+  driveProfile(30, 5, true);
+  //shoot disks
+  wait(500, msec);
+  driveProfile(12, 5, false);
+  setIntakeSpeed(12);
+  drivetrainTurn(40);
+  driveProfile(100, 6, true);
+  drivetrainTurn(310);
+  //shoot disks
+  wait(500, msec); 
+  drivetrainTurn(37);
+  wait(100, msec);
+
+  driveProfile(50, 2.5, true);
+  wait(100, msec);
+  drivetrainTurn(290);
+  driveProfile(40, 4, false);
+  drivetrainTurn(180);
+  timeDrive(-4, 1200);
+  wait(200, msec);
+  driveProfile(50, 3, true);
+  drivetrainTurn(270);
+  
+  
+
 
 }
 

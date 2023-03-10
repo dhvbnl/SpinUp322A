@@ -5,24 +5,40 @@ struct Acceleration {
   bool fwd;
   double deg;
   double maxspeed;
+  double speedl; 
+  double speedr; 
 } acc;
 
 double speed = 0;
 
-int move(double speed, bool fwd) {
+double getLeftEncoder() {return leftFrontDrive.rotation(deg); }
+double getRightEncoder() {return rightFrontDrive.rotation(deg);}
+int movel(double speed, bool fwd) {
   if (fwd) {
      leftFrontDrive.spin(vex::directionType::fwd, speed, volt);
-     rightFrontDrive.spin(vex::directionType::fwd, speed, volt);
+     leftMiddleDrive.spin(vex::directionType::fwd, speed, volt); 
      leftBackDrive.spin(vex::directionType::fwd, speed, volt);
-     rightBackDrive.spin(vex::directionType::fwd, speed, volt);
     
   } else {
     leftFrontDrive.spin(vex::directionType::rev, speed, volt);
-    rightFrontDrive.spin(vex::directionType::rev, speed, volt);
+    leftMiddleDrive.spin(vex::directionType::rev, speed, volt); 
     leftBackDrive.spin(vex::directionType::rev, speed, volt);
+  }
+  return 0;
+}
+int mover(double speed, bool fwd) {
+  if (fwd) {
+    rightFrontDrive.spin(vex::directionType::fwd, speed, volt);
+    rightMiddleDrive.spin(vex::directionType::fwd, speed, volt); 
+    rightBackDrive.spin(vex::directionType::fwd, speed, volt);
+    
+  } else {
+    rightFrontDrive.spin(vex::directionType::rev, speed, volt);
+    rightMiddleDrive.spin(vex::directionType::rev, speed, volt); 
     rightBackDrive.spin(vex::directionType::rev, speed, volt);
   }
   return 0;
+
 }
 //accelerate
 /*int accelerate() {
@@ -61,20 +77,24 @@ int move(double speed, bool fwd) {
   }
   return 0;
 }*/
-void accelerate (motor m) {
+void accelerate () {
   double M = acc.maxspeed; 
-  double t = 9;
-  double k = 0.8;
-  double x = m.rotation(deg) * convertInches; 
-
+  double t = 2.8;
+  double k = 0.7;
 
 
   //      1/(1+te^(-kx) 
   //logistic growth curve ("s" curve) 
-  while (x < 8) {
-    double speed = M / (1 + t * exp(-k * x)); // x = position 
-    m.spin(fwd, speed, pct);
+  while ( fabs(getLeftEncoder() * convertInches) < 8 ||  fabs(getRightEncoder() * convertInches) < 8) {
+    acc.speedl = M / (1 + t * exp(-k *  fabs(getLeftEncoder() * convertInches))); // x = position 
+    acc.speedr = M / (1 + t * exp(-k *  fabs(getRightEncoder() * convertInches))); 
+    wait(10, msec);
+    // printf("leftencoder %f", getLeftEncoder() * convertInches);
+    // printf("    rightencoder %f", getRightEncoder() * convertInches);
+     printf("   speed %f \n", acc.speedl);
+
   }
+  
 }
 //decelerate
 /*int decelerate() {
@@ -122,38 +142,134 @@ void accelerate (motor m) {
   return 0;
 }*/
 
-double decelerate (){
+void decelerate (){
   double M = acc.maxspeed; 
+  //M = 12;
   double k; 
   double x; 
+  leftMiddleDrive.resetRotation();
+  rightMiddleDrive.resetRotation();
 
   if (M < 5) {
-    k = 2;
+    k = 5.5;
+    x = 2;
   } else if (M < 9) {
-    k = 1; 
+    k = 5;
+    x = 13; 
   } else {
-    k = 0.5; 
+    k = 6; 
+    x = 18;
   }
   //  logistic growth curve ("s" curve)
   // M < 5; k = 2; x = 4
   // M < 9; k = 1; x = 8
   // M <= 12; k = 0.5; x = 13
-  double speed = (M / (1 + 0.01 * exp (k * x))) * 100 / 12 ;
+  while (fabs(leftMiddleDrive.rotation(deg) * convertInches) < x ||  fabs(rightMiddleDrive.rotation(deg) * convertInches) < x) {
+    //acc.speedl = (M / (1 + 0.01 * exp (k *  fabs(leftMiddleDrive.rotation(deg) * convertInches))));
+   // acc.speedr = (M / (1 + 0.01 * exp (k *  fabs(rightMiddleDrive.rotation(deg) * convertInches))));
+    acc.speedl = M * exp(-fabs(leftMiddleDrive.rotation(deg)) *convertInches / k +.5);
+    acc.speedr = M * exp(-fabs(rightMiddleDrive.rotation(deg)) * convertInches / k) + .5;
+    printf("leftencoder %f", getLeftEncoder() * convertInches);
+    //printf("    rightencoder %f", getRightEncoder() * convertInches);
+    printf("   speeddec %f \n", acc.speedl);
+    wait(10, msec);
+  }
 
-  return speed; 
+ 
 }
 
 void driveProfile(int dist, double maxspeed, bool fwd) { 
+  setDrivetrainLock();
   acc.dist = dist; 
   acc.maxspeed = maxspeed; 
+  leftFrontDrive.resetRotation();
+  rightFrontDrive.resetRotation();
+  double startvalL = getLeftEncoder() * convertInches; 
+  double startvalR = getRightEncoder() * convertInches; 
+  int enddist; 
+  
+  if (maxspeed < 5) {
+    enddist = 2;
+  } else if (maxspeed < 9) {
+    printf("speed done %f \n", 0.0);
+    enddist = 13;
+  } else {
+    enddist = 18; 
+  }
+
+  if (dist < maxspeed + enddist) {
+    thread acc1(accelerate);
+    while (fabs(getLeftEncoder() * convertInches) - startvalL < dist/2 && fabs(getRightEncoder() * convertInches) - startvalR < dist/2) {
+      movel(acc.speedl, fwd);
+      mover(acc.speedr, fwd);
+      wait(10, msec);
+    }
+    printf("accel done %f \n", 0.0);
+    acc1.interrupt();
+    thread dec1(decelerate);
+    while (fabs(getLeftEncoder() * convertInches) - startvalL < dist && fabs(getRightEncoder() * convertInches) - startvalR < dist) {
+      movel(acc.speedl, fwd);
+      mover(acc.speedr, fwd);
+      wait(10, msec);
+    }
+    dec1.interrupt();
+  } else { 
+    thread acc2(accelerate);
+    while (fabs(getLeftEncoder() * convertInches) - startvalL < 8 && fabs(getRightEncoder() * convertInches) - startvalR < 8) {
+      movel(acc.speedl, fwd);
+      mover(acc.speedr, fwd);
+      wait(10, msec);
+      // printf("leftencoder %f", getLeftEncoder() * convertInches);
+      // printf("    rightencoder %f \n", getRightEncoder() * convertInches);
+    }
+    acc2.interrupt();
+    //printf("accel done %f \n", 0.0);
+    while (fabs(getLeftEncoder() * convertInches) - startvalL < (dist - enddist) && fabs(getRightEncoder() * convertInches) - startvalR < (dist - enddist)) {
+     // printf("maxspeed %f \n", getLeftEncoder() * convertInches);
+      movel(maxspeed, fwd);
+      mover(maxspeed, fwd);
+      wait(10, msec);
+    }
+    //printf("done with maxspeed %f \n", getLeftEncoder() * convertInches);
+    thread dec2(decelerate);
+    while (fabs(getLeftEncoder() * convertInches) - startvalL < dist && fabs(getRightEncoder() * convertInches) - startvalR < dist) {
+     // printf("decel %f \n", getLeftEncoder() * convertInches);
+      movel(acc.speedl, fwd);
+      mover(acc.speedr, fwd);
+      wait(10, msec);
+      // printf("dec %f", getLeftEncoder() * convertInches);
+      // printf("    dec %f \n", getRightEncoder() * convertInches);
+  
+    }
+    dec2.interrupt();
+    printf("decdone %f \n", acc.speedl);
+  }
+ 
 
 
+  leftFrontDrive.stop();
+  rightFrontDrive.stop();
+  rightBackDrive.stop();
+  leftBackDrive.stop();
+  leftMiddleDrive.stop();
+  rightMiddleDrive.stop();
+   
 
+  //add special case for when the total distance is less than what it is supposed to be 
+  printf("leftencoder %f", getLeftEncoder() * convertInches);
+  printf("    rightencoder %f \n", getRightEncoder() * convertInches);
   
 
 
   
   
+}
+
+void testmotionprofile(int dist) {
+  driveProfile(10, 5, true);
+  wait(100, msec);
+
+ 
 }
 
 /*int driveProfile(int dist, double maxspeed, bool fwd) { //encoder orientation flipped

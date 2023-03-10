@@ -7,6 +7,6 @@ void leftroller(int roller);
 void bothrollers(vex::color col, vex::vision::signature sig, int roller);
 void rightroller();
 void indexerauton(int count, int velbefore);
-void skills(vex::color col, vex::vision::signature sig);
+void skills();
 void straightline(double speed, int timedrive);
 void testrollers();

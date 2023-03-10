@@ -17,7 +17,7 @@ motor rightFrontDrive = motor(PORT18, ratio6_1, false);
 motor rightBackDrive = motor(PORT20, ratio6_1, false);
 motor rightMiddleDrive = motor(PORT19, ratio6_1, true);
 
-motor flywheel = motor(PORT6, ratio6_1, false);
+motor flywheel = motor(PORT7, ratio6_1, false);
 
 // motor indexer = motor(PORT18, ratio18_1, true);
 

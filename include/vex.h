@@ -32,8 +32,8 @@
 //convert between velocity and voltage.
 const double voltageConverstion = 100/12;
 
-const double convertInches = (2.75 * M_PI) / 360;
-const double convertDegrees = 360 / (2.75 * M_PI);
+const double convertInches = (3.25 * M_PI) / 360;
+const double convertDegrees = 360 / (3.25 * M_PI);
 
 #define waitUntil(condition)                                                   \
   do {                                                                         \
