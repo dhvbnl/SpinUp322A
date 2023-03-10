@@ -11,7 +11,7 @@ void flywheelControl() {
     // set speed based on inputs
     setflywheelSpeed();
     flywheelAdjust();
-    wait(10, msec);
+    wait(20, msec);
   }
 }
 
