@@ -233,7 +233,7 @@ void arcturn (double left, double right, double turnangle) {
   rightMiddleDrive.stop();
   leftBackDrive.stop();
   rightBackDrive.stop();
-  printf("arcturn done %f \n", 0.0);
+  printf("arcturn done %f \n", getInertialHeading());
 }
 void arcturn2 (double left, double right, double turnangle) {
   while (getInertialHeading() < turnangle - 2 || getInertialHeading() > turnangle + 2) {

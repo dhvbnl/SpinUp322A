@@ -91,7 +91,7 @@ void accelerate () {
     wait(10, msec);
     // printf("leftencoder %f", getLeftEncoder() * convertInches);
     // printf("    rightencoder %f", getRightEncoder() * convertInches);
-     printf("   speed %f \n", acc.speedl);
+     //printf("   speed %f \n", acc.speedl);
 
   }
   
@@ -169,9 +169,9 @@ void decelerate (){
    // acc.speedr = (M / (1 + 0.01 * exp (k *  fabs(rightMiddleDrive.rotation(deg) * convertInches))));
     acc.speedl = M * exp(-fabs(leftMiddleDrive.rotation(deg)) *convertInches / k +.5);
     acc.speedr = M * exp(-fabs(rightMiddleDrive.rotation(deg)) * convertInches / k) + .5;
-    printf("leftencoder %f", getLeftEncoder() * convertInches);
-    //printf("    rightencoder %f", getRightEncoder() * convertInches);
-    printf("   speeddec %f \n", acc.speedl);
+    // printf("leftencoder %f", getLeftEncoder() * convertInches);
+    // //printf("    rightencoder %f", getRightEncoder() * convertInches);
+    // printf("   speeddec %f \n", acc.speedl);
     wait(10, msec);
   }
 
@@ -191,7 +191,7 @@ void driveProfile(int dist, double maxspeed, bool fwd) {
   if (maxspeed < 5) {
     enddist = 2;
   } else if (maxspeed < 9) {
-    printf("speed done %f \n", 0.0);
+    //printf("speed done %f \n", 0.0);
     enddist = 13;
   } else {
     enddist = 18; 
@@ -204,7 +204,7 @@ void driveProfile(int dist, double maxspeed, bool fwd) {
       mover(acc.speedr, fwd);
       wait(10, msec);
     }
-    printf("accel done %f \n", 0.0);
+   // printf("accel done %f \n", 0.0);
     acc1.interrupt();
     thread dec1(decelerate);
     while (fabs(getLeftEncoder() * convertInches) - startvalL < dist && fabs(getRightEncoder() * convertInches) - startvalR < dist) {
@@ -242,7 +242,7 @@ void driveProfile(int dist, double maxspeed, bool fwd) {
   
     }
     dec2.interrupt();
-    printf("decdone %f \n", acc.speedl);
+   // printf("decdone %f \n", acc.speedl);
   }
  
 

@@ -1,15 +1,5 @@
 #include "vex.h"
 
-void testvision (color col, signature sig, bool right) {
-  // while (true) {
-  //   int num = v.takeSnapshot(sig);
-  //   printf("object found %f \n", 1.0 * num);
-  //   wait(10, msec);
-  // }
-   findGoal(col, sig, right);
-   //testflywheel();
-  //setDrivetrainSpeed(-3.5, 3.5);
-}
 void testinertial () {
   while(inert.isCalibrating()) {
     wait(100, msec);
@@ -44,19 +34,45 @@ void testrollers() {
 //   count++;
 //   return count;
 // }
+struct flywheel {
+  double speed; 
+} fly;
+
+void flywheelauton(){
+  while (true) {
+  int currentVelocity = flywheel.velocity(pct);
+  int speed = fly.speed / voltageConverstion;
+ // printf("flywheel speed %i \n", speed);
+
+  if(currentVelocity < fly.speed - 1){
+    speed += (fly.speed - currentVelocity)/2;
+  } else if(currentVelocity > fly.speed + 1){
+    speed += (fly.speed - currentVelocity)/2;
+  }
+    flywheel.spin(fwd, speed, volt);
+  wait(10,msec);
+  }
+}
+
+void testploop() {
+  printf("test %f \n", 0.0);
+  setIntakeSpeed(12);
+  //timeDrive(2.5, 2000);
+}
 
 void indexnew(int count, double velbefore) {
   int i = 0;
-  while (i < count) {
-    if (flywheel.velocity(pct) >= velbefore - 1 && flywheel.velocity(pct) <= velbefore + 1) {
-      printf("flywheel velocity %f \n", flywheel.velocity(pct));
+  timer t;
+  while (i < count && t.time(msec) < 4000) {
+    if (flywheel.velocity(pct) >= velbefore - 1 && flywheel.velocity(pct) <= velbefore + 1 && t.time(msec) < 5000) {
+     // printf("flywheel velocity %f \n", flywheel.velocity(pct));
       intake.spin(fwd, -100, pct); // spin indexer
-      while(flywheelCheck.value(pct) > 50) { // wait for disk to reach flywheel
+      while(flywheelCheck.value(pct) > 50 && t.time(msec) < 5000) { // wait for disk to reach flywheel
       //  printf("waitforflywheel %lo \n", flywheelCheck.value(pct));
        wait(10, msec);
       }
       intake.spin(fwd, 60, pct);
-      while (flywheelCheck.value(pct) < 50) { // wait for disk to pass flywheel
+      while (flywheelCheck.value(pct) < 50 && t.time(msec) < 5000) { // wait for disk to pass flywheel
       //  printf("check %lo \n", flywheelCheck.value(pct));
         wait(10, msec);
       }
@@ -66,7 +82,10 @@ void indexnew(int count, double velbefore) {
     //printf("disk count %i \n", i);
    // intake.spin(fwd, 60, pct);
     intake.stop();
+    //printf("time %f \n", t.time(msec));
     wait(20, msec);
+
+
   } 
 
 }
@@ -76,7 +95,6 @@ void testflywheel (int flywheelspeed, int disks) {
   //printf("enterprogram %f \n", 1.0);
   //double flywheelspeed = 90;
   int flywheelvel = flywheel.velocity(pct);
-  printf("flywheel velocity before %f \n", flywheel.velocity(pct));
   indexnew(disks, flywheelvel);
   //flywheelmanual(0);
 
@@ -84,25 +102,6 @@ void testflywheel (int flywheelspeed, int disks) {
   //flywheelmanual(12);
 }
 
-void testarea(color col, signature sig) {
-  v.setBrightness(150);
-  v.takeSnapshot(sig);
-   while (v.objectCount == 0 ||
-          v.largestObject.height < 30 ||
-          v.largestObject.width < 60) {
-    wait(20, msec);
-    v.takeSnapshot(sig);
-  }
-  printf("object found %f \n", 0.0);
-  vision::object test = v.largestObject;
-  while (true) {
-    printf("area %f \n", double(test.width*test.height));
-    printf("width %f \n", double(test.width));
-    wait(3000, msec);
-    printf("change %f \n", 0.0);
-    v.takeSnapshot(sig);
-  }
-}
 
 void leftroller(int roller) {
   setDrivetrainLock();
@@ -114,23 +113,21 @@ void leftroller(int roller) {
   setIntakeSpeed(0);
   timeDrive(4, 400);
   arcturn(5, 0, 60); //5 0 60
-  arcturn2(-2.5, 5, 352); //-2.5 5 352
+  arcturn2(-3, 5, 354); //-2.5 5 352
   printf("inertial %f \n", getInertialHeading());
   wait(1200, msec);
   testflywheel(flywheelspeed, 2);
   wait(100, msec);
-//   timeDrive(-5, 600);
   drivetrainTurn(54);
   printf("inertial %f \n", getInertialHeading());
    //turn to three disk stack
- // setIntakeSpeed(12);
-// timeDrive(3, 400);
-  //wait(100, msec);
+
   flywheelmanual(11.6);
   setIntakeSpeed(12);
-  timeDrive(3, 2000);
-  wait(300, msec);
-  arcturn(0, 5, 327);
+  timeDrive(3, 800);
+  // wait(300, msec);
+  threestack(3, 1000);
+  arcturn(0, 5, 333);
   wait(500, msec);
   printf("inertial %f \n", getInertialHeading());
   testflywheel(flywheelspeed, 3);
@@ -167,84 +164,139 @@ void rightroller () {
   int flywheelspeed = 12;
   flywheelmanual(12);
   timeDrive(-6, 600);
-  drivetrainTurn(90);
-  timeDrive(-6, 500);
+  drivetrainTurn(85);
+  timeDrive(-6, 400);
   setIntakeSpeed(12);
-  wait(200, msec);
+  wait(300, msec);
   setIntakeSpeed(0);
-  timeDrive(3, 900);
-  drivetrainTurn(98);
-  wait(3000, msec);
+  timeDrive(4, 400);
+  wait(100, msec);
+  drivetrainTurn(100);
+  wait(2500, msec);
   testflywheel(flywheelspeed, 2);
   setIntakeSpeed(12);
-  drivetrainTurn(43);
-  timeDrive(5, 2500);
-  drivetrainTurn(135);
-  timeDrive(5, 500);
-  testflywheel(flywheelspeed, 3);
+  drivetrainTurn(48);
+  driveProfile(80, 6, true);
+   wait(500, msec); 
+ // timeDrive(5, 2500);
+  drivetrainTurn(122);
+  //timeDrive(5, 500);
+  wait(500, msec); 
+  testflywheel(flywheelspeed, 2);
   // printf("reached %f \n", 0.0);
   
 }
-
+void threestack(double speed, int movetime) {
+  setIntakeSpeed(12);
+  while (intakeCheck.value(pct) > 10) {
+    setDrivetrainSpeed(1.5, 1.5);
+    wait(10, msec);
+  }
+  setDrivetrainSpeed(0, 0);
+  while (intakeCheck.value(pct) < 10) {
+    wait(10, msec);
+    printf("wait %f \n", 0.0);
+  }
+  wait(1000, msec);
+  while (intakeCheck.value(pct) > 10) {
+    setDrivetrainSpeed(1.5, 1.5);
+    wait(10, msec);
+  }
+  setDrivetrainSpeed(0, 0);
+  while (intakeCheck.value(pct) < 10) {
+    wait(10, msec);
+    printf("wait %f \n", 1.0);
+  }
+  wait(1000, msec);
+  printf("moveagain %f \n", 1.0);
+  timeDrive(speed, movetime-700);
+}
 void skills () {
-  // bothrollers(col, sig, 400);
-  // timeDrive(3, 800);
-  // drivetrainTurn(180);
-  // timeDrive(-4, 1500);
-  // timeDrive(2, 300);
-  // setIntakeSpeed(12);
-  // wait(400, msec);
-  // setIntakeSpeed(0);
-  // timeDrive(4, 700);
-  // drivetrainTurn(226);
-  // expansion.set(false);
-  // wait(3, sec);
-  // expansion.set(true);
   setDrivetrainLock();
- // flywheelmanual(12);
+ 
+  flywheelmanual(12);
+ // fly.speed = 89; //flywheel speed change 
+  
   timeDrive(-4, 500); //rolls rollers
   setIntakeSpeed(12);
-  wait(400, msec); // 200 match, 400 skills 
+  wait(500, msec); // 200 match, 400 skills 
   setIntakeSpeed(0);
-  timeDrive(4, 400);
-  drivetrainTurn(85);
-  wait(2000, msec);
-  //wait(3000, msec);
-  //testflywheel(10, 2);
+  timeDrive(4, 900);
+  drivetrainTurn(357);
+  wait(2500, msec);
+  testflywheel(12, 2);
+ 
+  thread flythread(flywheelauton);
+   fly.speed = 80; 
+  //get three stack 
   setIntakeSpeed(12);
-  drivetrainTurn(5);
-  timeDrive(3, 1600);
-  wait(100, msec);
-  drivetrainTurn(72);
-  timeDrive(-4, 1800);
-  //wait(100, msec);
- // setIntakeSpeed(0);
-  timeDrive(4, 600);
-  drivetrainTurn(7);
-  driveProfile(30, 5, true);
-  //shoot disks
+  threestack(2, 2300);
+  //timeDrive(3, 1800);
   wait(500, msec);
-  driveProfile(12, 5, false);
-  setIntakeSpeed(12);
-  drivetrainTurn(40);
-  driveProfile(100, 6, true);
-  drivetrainTurn(310);
+  
+ //flywheel speed change 
+  drivetrainTurn(71); // 72
+  //roll rollers
+  timeDrive(-5, 1500);
+  wait(300, msec);
+  timeDrive(4, 600);
+  drivetrainTurn(10);
+  driveProfile(35, 5, true);
   //shoot disks
+  testflywheel(80, 3);
+
+  fly.speed = 80;
+  wait(500, msec);
+  driveProfile(17, 5, false);
+  setIntakeSpeed(12);
+  //turn to three singles 
+  drivetrainTurn(39);//40
+  driveProfile(100, 5, true);
+  drivetrainTurn(313);
+  wait(500, msec);
+  //shoot disks
+  testflywheel(80, 3); 
   wait(500, msec); 
   drivetrainTurn(37);
   wait(100, msec);
-
-  driveProfile(50, 2.5, true);
+  //get threestack 
+  fly.speed = 83;
+  setDrivetrainSpeed(4, 4);
+  wait(400, msec);
+  threestack(2, 2500);
+  //timeDrive(2, 5000);
   wait(100, msec);
   drivetrainTurn(290);
-  driveProfile(40, 4, false);
-  drivetrainTurn(180);
-  timeDrive(-4, 1200);
-  wait(200, msec);
-  driveProfile(50, 3, true);
-  drivetrainTurn(270);
-  
-  
+  //shoots disks 
+  testflywheel(83, 3);
+  //rollers
+  setIntakeSpeed(12);
+  driveProfile(10, 4, true);
+  arcturn(-7,-1.5, 200);
+  timeDrive(-7, 700);
+  wait(400, msec);
+  //pick up disks 
+  fly.speed = 82;
+  timeDrive(4, 400);
+  drivetrainTurn(165);
+  threestack(2, 1500);
+  wait(500, msec);
+  //driveProfile(15, 4, false);
+  drivetrainTurn(260);
+  timeDrive(-6, 1200);
+  wait(400, msec);
+  setIntakeSpeed(0);
+  timeDrive(5, 500);
+  drivetrainTurn(192);
+  driveProfile(30, 6, true);
+  testflywheel(80, 3);
+  timeDrive(-6, 1000);
+  wait(100, msec);
+  timeDrive(6, 300);
+  drivetrainTurn(225);
+  expansion.set(true);
+  wait(1, sec);
+  expansion.set(false);
 
 
 }
